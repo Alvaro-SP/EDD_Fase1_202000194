@@ -18,10 +18,6 @@ Aplicación web mediante HTML y el lenguaje JavaScript con el uso de Github Page
 
 Navegador
 
-## Ejecutando las pruebas ⚙️
-
-_Explica como ejecutar las pruebas automatizadas para este sistema_
-
 ## Despliegue 📦
 
 En la parte inferior derecha se tiene el link del Github pages para desplegar la aplicación.
@@ -38,18 +34,4 @@ En Github
 ## Autores ✒️
 
 * **Alvaro Emmanuel Socop Pérez** - *Estudiante de Ing. Sistemas* - [USAC](https://github.com/Alvaro-SP)
-
-
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
-
-## Expresiones de Gratitud 🎁
-
-* Comenta a otros sobre este proyecto 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
-
+uedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
