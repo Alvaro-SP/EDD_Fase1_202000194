@@ -1,107 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>202000194-Login</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
-</head>
-<body>
-	
-	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-			<div class="wrap-login100 p-t-30 p-b-50">
-				<span class="login100-form-title p-b-41">
-					Iniciar Sesión
-				</span>
-				<form class="login100-form validate-form p-b-33 p-t-5">
-
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input id="user" name="Usuario" class="input100" type="text" name="username" placeholder="Nombre de Usuario: ej. Alvaro">
-						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input id="contra" name="Contraseña" class="input100" type="password" name="pass" placeholder="Contraseña: ej. alvarosp">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-					<div class="contact100-form-checkbox m-l-4">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-						<label class="label-checkbox100" for="ckb1">
-							Recordarme
-						</label>
-					</div>
-
-					<div  class="container-login100-form-btn m-t-32">
-						<button onclick="login()" class="login100-form-btn">
-							Iniciar Sesión
-						</button>
-					</div>
-					
-					<!-- <div class="text-center w-full p-t-42 p-b-22">
-						<span class="txt1">
-							O inicia sesión con: 
-						</span>
-					</div>
-
-					<a href="#" class="btn-face m-b-10">
-						<i class="fa fa-facebook-official"></i>
-						Facebook
-					</a>
-
-					<a href="#" class="btn-google m-b-10">
-						<img src="images/icons/icon-google.png" alt="GOOGLE">
-						Google
-					</a> -->
-				</form>
-			</div>
-		</div>
-	</div>
-	
-
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Login ERP</h3>
+                <form>
+                  <div class="form-group">
+                    <label>Username *</label>
+                    <input id="user" name="user" type="text" class="form-control p_input" placeholder="Ej. AlvaroSocop">
+                  </div>
+                  <div class="form-group">
+                    <label>Password *</label>
+                    <input id="contra" name="contra" type="text" class="form-control p_input" placeholder="Ej. AlvaroSP">
+                  </div>
+                  <div class="form-group d-flex align-items-center justify-content-between">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" > Remember me </label>
+                    </div>
+                    <a href="#" class="forgot-pass">Forgot password</a>
+                  </div>
+                  
+                  
+                </form>
+                <div class="text-center">
+                  <button onclick="login()"  class="btn btn-primary btn-block enter-btn">Login</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <script src="ProgramLogic/main.js"></script>
     <script>
-		
-
-	</script>
-
-</body>
+      function login() {
+    var usuarioingresado = document.querySelector("#user").value;
+    var contrasenaingresada = document.querySelector("#contra").value;
+    
+    // //sino=true
+    if (usuarioingresado == "" || contrasenaingresada == "") {
+        alert("Por favor llene todos los campos.");
+    }else {
+    if (((usuarioingresado == "Admin") || (usuarioingresado == "admin") || (usuarioingresado == "ADMIN")) && ((contrasenaingresada == "1234" || (contrasenaingresada == "admin") || (contrasenaingresada == "ADMIN")))) {
+        location.href = "\Pages/Admin/PanelAdmin.html"
+        console.log("hola") 
+    }else{
+      sessionStorage.setItem("username",usuarioingresado)
+      sessionStorage.setItem("pass",contrasenaingresada)
+      location.href = "\Pages/Admin/PanelAdmin.html"
+      // document.getElementById("elIdDeLaCapa").innerHTML=variable;
+    }
+}
+}
+    </script>
+  </body>
 </html>
