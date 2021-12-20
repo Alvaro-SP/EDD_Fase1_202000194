@@ -72,26 +72,7 @@
     <!-- endinject -->
     <script src="ProgramLogic/main.js"></script>
     <script>
-      function login() {
-    var usuarioingresado = document.querySelector("#user").value;
-    var contrasenaingresada = document.querySelector("#contra").value;
-    
-    // //sino=true
-    if (usuarioingresado == "" || contrasenaingresada == "") {
-        alert("Por favor llene todos los campos.");
-    }else {
-    if (((usuarioingresado == "Admin") || (usuarioingresado == "admin") || (usuarioingresado == "ADMIN")) && ((contrasenaingresada == "1234" || (contrasenaingresada == "admin") || (contrasenaingresada == "ADMIN")))) {
-        location.href = "\pages/Admin/PanelAdmin.html"
-        console.log("hola") 
-    }else{
       
-      // sessionStorage.setItem("idVendedor",contrasenaingresada)
-      location.href = "\pages/Admin/PanelAdmin.html"
-      // document.getElementById("elIdDeLaCapa").innerHTML=variable;
-
-    }
-}
-}
     </script>
   </body>
 </html>

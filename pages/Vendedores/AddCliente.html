@@ -22,14 +22,14 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body>
+  <body onload="onloadName()">
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a  href="index.html"><img src="../../assets/images/logotipo.png" height="90" width="200" alt="logo" /></a>
+          <a  href="../../index.html"><img src="../../assets/images/logotipo.png" height="90" width="200" alt="logo" /></a>
           <br><br>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="../../assets/images/logo.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo.svg" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
@@ -40,7 +40,7 @@
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">Administrador</h5>
+                  <h5 id="prin" class="mb-0 font-weight-normal">Administrador</h5>
                   <span>Gold Member</span>
                 </div>
               </div>
@@ -239,7 +239,7 @@
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
                     <img class="img-xs rounded-circle" src="../../assets/images/faces/user.png" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Administrador</p>
+                    <p id="parrafo" class="mb-0 d-none d-sm-block navbar-profile-name">Administrador</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
@@ -257,7 +257,7 @@
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a href="index.html" class="dropdown-item preview-item">
+                  <a href="../../index.html" class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>
@@ -266,7 +266,7 @@
                    
                     <div class="preview-item-content">
                          
-                             <p href="../../index.html" class="preview-subject mb-1">Log out</p>
+                             <p href="../../../../index.html" class="preview-subject mb-1">Log out</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
@@ -298,7 +298,7 @@
               <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">Administración de Clientes Asignados</h3>
+                    <h3  class="card-title">Administración de Clientes Asignados</h3>
                     <img src="../../assets/images/adminad.png" width="300" height="300" alt="admin">                    
                   </div>
                 </div>
@@ -376,6 +376,8 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script src="../../circular-json.js"></script>
+    <script src="../../ProgramLogic/main.js"></script>
     
   </body>
 </html>
