@@ -1072,7 +1072,10 @@ function cargaVendedores(){
             pass=items.password
             var add = new Vendedoresobj(parseInt(idi),usernamel,name,age,mail,pass);
             //!AGREGO CADA UNO DE LOS VENDEDORES.
-            var list=sessionStorage.getItem("sales")        
+            var list=sessionStorage.getItem("sales") 
+            if(list==null){
+                list="[]"
+            }        
             console.log("AGREGANDO UN VENDEDOR-----------")
             listjson = JSON.parse(list);
             var existevende=false
@@ -1389,7 +1392,10 @@ function cargaClientes(){
                 mail=items.correo
                 var add = new Clienteobj(idi,parseInt(idivendedor),name,mail);
                 //!AGREGO CADA UNO DE LOS CLIENTES.
-                var list=sessionStorage.getItem("clients")        
+                var list=sessionStorage.getItem("clients")  
+                if(list==null){
+                    list="[]"
+                }       
                 console.log("AGREGANDO UN CLIENTE -----------")
                 listjson = JSON.parse(list);
                 var existecliente=false
