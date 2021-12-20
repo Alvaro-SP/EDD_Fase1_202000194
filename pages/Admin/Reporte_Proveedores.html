@@ -23,7 +23,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body>
+  <body onload="networkProveedores()">
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -419,38 +419,7 @@
     <!-- <script src="../../ProgramLogic/main.js"></script> -->
     <script src="../../ProgramLogic/main.js"></script>
     <script type="text/javascript">
-      // create a network
-      var container = document.getElementById("mynetwork");
-      var DOTstring = networkProveedores()
-      
-      // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
-      
-      console.log(DOTstring)
-      // console.log("Holaa esta es una prueba.")
-
-      var parsedData = vis.parseDOTNetwork(DOTstring);
-      var data = {
-          nodes: parsedData.nodes,
-          edges: parsedData.edges
-      }
-      var options = {
-          nodes: {
-              shape: 'box',
-              borderWidth: 2,                
-              color:"yellow",
-          },        
-          layout: {
-              hierarchical: {
-                  levelSeparation: 100,
-                  nodeSpacing: 100,
-                  parentCentralization: true,
-                  direction: 'UD',        // UD, DU, LR, RL
-                  sortMethod: 'directed',  // hubsize, directed
-                  shakeTowards: 'roots'  // roots, leaves                        
-              },
-          },                        
-      };
-      var network = new vis.Network(container, data, options);
+     
       </script> 
    
   </body>

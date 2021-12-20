@@ -74,51 +74,57 @@ class BST_prov{
     }
     
     //! ELIMINAR UN PROVEEDOR POR SU ID
-    removeProv(value) {
+    removeProv(id) {
         if (!this.head) {
             return false;
         } else {
-            return this.removeProveedor(this.head, value);
+            this.head=this.removeProveedor(this.head, id);
         }
     }
     // auxiliar de eliminar
     removeProveedor(tmphead, id) {
         if (!tmphead) {//primero que nada se valida si no esta nulo,
-        return null;
+            console.log("es nulo")
+            return null;
         }
         
         //luego se ve si es id es menor que el valor del id de la raiz y nos movemos al hijo izquierdo
         if (id < tmphead.data.id) {
             tmphead.izquierda = this.removeProveedor(tmphead.izquierda, id);
+            console.log("es menor")
             return tmphead;
         
         // si el valor es mayor que la raiz nos movemos al hijo derecho talcual un recorrido
         } else if (id > tmphead.data.id) {
             tmphead.derecha = this.removeProveedor(tmphead.derecha, id);
+            console.log("es mayor")
             return tmphead;
-            
             // encontramos el valor a remover del nodo.
         } else {
-            
+            console.log("entrando al else:")
             // si no existen nodos hijos osea llegamos a las hojas entonces toca eliminar ese nodo.
             if (!tmphead.izquierda && !tmphead.derecha) {
                 tmphead = null;
+                console.log("no hay ni izquierda ni derecha")
                 return tmphead;
             }
             //si hay un hijo izquierdo
-            
-            if (tmphead.izquierda) {
-                tmphead = tmphead.izquierda;
-                return tmphead;
-                //si hay un hijo derecho
-            } else if (tmphead.derecha) {
+            // if (tmphead==this.head){}
+            if (!tmphead.izquierda) {
+                console.log("tiene un hijo izquierdo:")
                 tmphead = tmphead.derecha;
                 return tmphead;
+            //si hay un hijo derecho
+            } else if (!tmphead.derecha) {
+                console.log("tiene un hijo derecho:")
+                tmphead = tmphead.izquierda;
+                return tmphead;
             }
-            // If two child nodes (both)
             // si tiene los dos hijos nodo
             // se debe obtener el valor minimo del arbol hacia la derecha para asegurar que reemplazaremos el eliminado por ese nodo
             let minRight = this.findNode(tmphead.derecha);
+            console.log("si se cambia la cabeza:")
+            console.log(minRight)
             tmphead.data = minRight.data
             // ahora solo validamos de que se eliminó el nodo en el cual reemplazamos
             tmphead.derecha = this.removeProveedor(tmphead.derecha, minRight.data.id);
@@ -126,7 +132,9 @@ class BST_prov{
         }
     }//buscar el nodo mas a la izquierda
     findNode(tmphead) {
+        console.log("entrando a buscarel nodo a borrar:")
         if (!tmphead.izquierda) {
+            console.log("ya no hay mas a la izquierda:")
           return tmphead
         } else {
           return this.findNode(tmphead.izquierda)
@@ -198,12 +206,12 @@ class BST_prov{
     enlazar(tmphead) {
         if (tmphead != null) {
             if (tmphead.izquierda != null) {
-                this.dot += tmphead.data.id+'--'+tmphead.izquierda.data.id+';'
+                this.dot += tmphead.data.id+'->'+tmphead.izquierda.data.id+';'
                 // this.dot += tmphead.data.id+'--'+tmphead.izquierda.data.id+'[label = \"'+tmphead.izquierda.data.id+'\\n'+tmphead.izquierda.data.name+'\\n'+tmphead.izquierda.data.adress+'\\n'+tmphead.izquierda.data.tel+'\\n'+tmphead.izquierda.data.mail+'\"]'+';'
             }
             if (tmphead.derecha != null) {
                 // this.dot += tmphead.data.id+'[label = \"'+tmphead.data.id+'\\n'+tmphead.data.name+'\\n'+tmphead.data.adress+'\\n'+tmphead.data.tel+'\n'+tmphead.data.mail+'\"]'+'--'+tmphead.derecha.data.id+'[label = \"'+tmphead.derecha.data.id+'\\n'+tmphead.derecha.data.name+'\\n'+tmphead.derecha.data.adress+'\\n'+tmphead.derecha.data.tel+'\\n'+tmphead.derecha.data.mail+'\"]'+';'
-                this.dot += tmphead.data.id+'--'+tmphead.derecha.data.id+';'
+                this.dot += tmphead.data.id+'->'+tmphead.derecha.data.id+';'
             }
             this.enlazar(tmphead.izquierda)
             this.enlazar(tmphead.derecha)
@@ -269,8 +277,11 @@ function deleteProveedor(){
         var Proveedoresg = new BST_prov(Proveedoresg);
         if(Proveedoresg!=null){ 
             if(Proveedoresg.intree(parseInt(idi))){
+                console.log("antes de borrar")
+                console.log(Proveedoresg)
                 Proveedoresg.removeProv(parseInt(idi))
-                console.log(Proveedoresg.removeProv(parseInt(idi)))
+                // console.log(Proveedoresg.removeProv(parseInt(idi)))
+                console.log("despues de borrar")
                 console.log(Proveedoresg)
                 sessionStorage.setItem("BST",JSON.stringify(Proveedoresg))
                 alert("El Proveedor se ha eliminado correctamente")
@@ -330,7 +341,7 @@ function cargaProveedor(){
                 sessionStorage.setItem("BST",JSON.stringify(Proveedoresg));
                 
             }else if(Proveedoresg.intree(parseInt(idi))){
-                alert("El id del Proveedor ya existe en el sistema.");
+                console.log("El id del Proveedor ya existe en el sistema.");
             }
             else{
                 Proveedoresg.insert(add);
@@ -357,7 +368,39 @@ function networkProveedores() {
     
     Proveedoresg.dot += '}'
     
-    return Proveedoresg.dot
+    // return Proveedoresg.dot
+     // create a network
+    var container = document.getElementById("mynetwork");
+    var DOTstring = Proveedoresg.dot
+    
+    // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+    
+    console.log(DOTstring)
+    // console.log("Holaa esta es una prueba.")
+
+    var parsedData = vis.parseDOTNetwork(DOTstring);
+    var data = {
+        nodes: parsedData.nodes,
+        edges: parsedData.edges
+    }
+    var options = {
+        nodes: {
+            shape: 'box',
+            borderWidth: 2,                
+            color:"yellow",
+        },        
+        layout: {
+            hierarchical: {
+                levelSeparation: 150,
+                nodeSpacing: 190,
+                parentCentralization: true,
+                direction: 'UD',        // UD, DU, LR, RL
+                sortMethod: 'directed',  // hubsize, directed
+                shakeTowards: 'roots'  // roots, leaves                        
+            },
+        },                        
+    };
+    var network = new vis.Network(container, data, options);
 }
 function testBST(){
     var prov1= new Proveedoresobj(1,"Alvaro","Guatemala","57707472","socop2412@gmail.com");
@@ -658,6 +701,55 @@ class AVL_vend{
         return null;
     }
 
+    //! ELIMINAR EL CLIENTE EN EL VENDEDOR POR SU ID
+    delete_Cliente(id_vendedor,idcliente){
+        let aux= this.head;
+        var tempVendedor=this.searchTODOVendedor(id_vendedor)
+
+        if (tempVendedor!=null){
+            //antes que nada valido si el id del vendedor existe en mi arbol AVL
+            if(this.intreeClient(id_vendedor,idcliente)){
+                tempVendedor.cliente.deleteData(idcliente)
+                console.log("Se ha eliminado el CLIENTE en el Vendedor",tempVendedor.data.id)
+                alert("Se ha eliminado el CLIENTE en el Vendedor",tempVendedor.data.id)
+                return true
+            }
+            
+            // console.log(this.intree(id_vendedor))
+            // if(this.intree(id_vendedor)){
+            //     console.log(obj_cliente.id)
+            //     if(this.intreeClient(id_vendedor,obj_cliente.id)){
+            //         return this.insetar_Clienteaux(id_vendedor,this.head,obj_cliente);
+            //     }
+                
+            // }else{
+            //     console.log("el id del vendedor no se encontró")
+            //     return null;
+            // }
+        }
+        console.log("No existe un Vendedor con el id ingresado")
+        return false
+    }
+
+    delete_Clienteaux(id, tmphead,idcliente){        
+        if (tmphead.data.id===id){
+            tmphead.cliente.deleteCliente(idcliente)
+            console.log("se eliminó el cliente ",idcliente," en el id vendedor: ", tmphead.data.id)
+            return 
+        }
+        if (id < tmphead.data.id) {
+            if(tmphead.izquierda!=null){
+                return this.delete_Clienteaux(id, tmphead.izquierda,idcliente);
+            }            
+        } else if (id > tmphead.data.id) {
+            if(tmphead.derecha!=null){
+            return this.delete_Clienteaux(id, tmphead.derecha,idcliente);
+            }
+        } else {
+            return tmphead.data;
+        }
+        return null;
+    }
     //! SABER SI EXISTE UN MES EN UN VENDEDOR DADOS SUS ID's
     intreemonth(tempVendedor, id_mes){
         console.log(tempVendedor)  
@@ -1031,6 +1123,62 @@ function RegistrarVendedor(){
     }
     
 }
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ DELETE OF VENDEDORES ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function deleteVendedor(){
+    var idi=document.getElementById("idi").value;
+    if(idi!=""){
+        var list=sessionStorage.getItem("sales")  
+        if(list==null){
+            list="[]"
+        }
+        console.log("ELIMINANDO UN VENDEDOR-----------")
+        listjson = JSON.parse(list);
+        var existevende=false
+        var pos=0
+        var posaux=0
+        listjson.forEach(function(items) {
+                if(items.id==idi){
+                    console.log("si se encontró el vendedor aqui")
+                    existevende=true
+                    posaux=pos
+                }
+                pos++;
+        });
+        if(!existevende){
+            
+            alert(" El Vendedor NO se encontró en el sistema")
+        }else{
+            console.log("eliminando un vendedor")
+            listjson.splice(posaux,1)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("sales",jsoncreate)
+            alert("El id del VENDEDOR se ha ELIMINADO.")
+        } 
+        // if(Vendedoresg!=null){ 
+        //     if(Vendedoresg.intree(parseInt(idi))){
+        //         console.log("antes de borrar")
+        //         console.log(Vendedoresg)
+        //         Vendedoresg.eliminarVendedor(Vendedoresg.head,parseInt(idi))
+        //         // console.log(Vendedoresg.removeProv(parseInt(idi)))
+        //         console.log("despues de borrar")
+        //         console.log(Vendedoresg)
+        //         sessionStorage.setItem("avl",JSON.stringify(Vendedoresg))
+        //         alert("El Vendedoresg se ha eliminado correctamente")
+        //         return
+        //     }else{
+        //         alert("El Vendedoresg no se encuentra en el sistema.")
+        //     }
+        // }
+        // else{
+        //     alert("Aun no hay Vendedores")
+        // }
+        // console.log("*********Lista de Vendedoresg*********")
+        // Vendedoresg.inorder(Vendedoresg.head);
+    }else{
+        alert("Favor ingresar un ID del Vendedor")
+    }
+}
+
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ MASSIVE CHARGE OF VENDEDORES ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function cargaVendedores(){
     var input = document.getElementById('upload-json')
@@ -1132,7 +1280,7 @@ function genReportVendedor(){
           layout: {
               hierarchical: {
                   levelSeparation: 150,
-                  nodeSpacing: 150,
+                  nodeSpacing: 170,
                   parentCentralization: false,
                   direction: 'UD',        // UD, DU, LR, RL
                   sortMethod: 'directed',  // hubsize, directed
@@ -1145,8 +1293,7 @@ function genReportVendedor(){
 
 
 }
-function networkVendedores(){
-}
+
 
 
 //*************************************************************************** */
@@ -1185,7 +1332,7 @@ class LD_client{
         this.size++; //aumenta el tamaño de la lista.
     };
     
-    //REMOVER UN ELEMENTO DE LA LISTA BASADO EN DATA
+    //REMOVER UN ELEMENTO DE LA LISTA BASADO EN EL ID DEL CLIENTE
     deleteData(data){
         let current = this.head;
         let previous = null;
@@ -1342,6 +1489,43 @@ function RegistrarCliente(){
             alert(" El cliente se ha ingresado correctamente")
         }else{
             alert("El id del VENDEDOR ya existe en el sistema.")
+        }
+    }else{
+        alert("Rellene todos los campos")
+    }
+    
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ DELETE OF CLIENTES DE LOS VENDEDORES ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function deleteCliente(){
+    var idcurrent=sessionStorage.getItem("idcurrent")
+    var idi=document.getElementById("idi").value;   
+    // Proveedoresg=localStorage.getItem("BST")
+    if(idi!=""){
+        var list=sessionStorage.getItem("clients")  
+        if(list==null){
+            list="[]"
+        }      
+        console.log("ELIMINANDO UN CLIENTE-----------")
+        listjson = JSON.parse(list);
+        var existecliente=false;
+        var pos=0
+        var posaux=0
+        listjson.forEach(function(items) {
+                if(items.id==idi && items.idvendedor==idcurrent){
+                    console.log("si se encontró  el cliente aqui")
+                    existecliente=true;
+                    posaux=pos;
+                }
+                pos++;
+        });
+        if(!existecliente){
+            alert(" El Cliente NO se encontró en el sistema")
+        }else{
+            console.log("eliminando un cliente")
+            listjson.splice(posaux,1)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("clients",jsoncreate)
+            alert("El id del CLIENTE se ha ELIMINADO.")
         }
     }else{
         alert("Rellene todos los campos")
@@ -1525,7 +1709,7 @@ class LD_Month{
         };
         this.size++;
     };
-    //REMOVER UN ELEMENTO DE LA LISTA BASADO EN DATA
+    //REMOVER UN ELEMENTO DE LA LISTA BASADO EN EL MES
     deleteData(data){
         let current = this.head;
         let previous = null;
@@ -1642,7 +1826,8 @@ class LD_Month{
     }
 };
 
-//! MATRIZ DINÁMICA CON HORAS Y DIAS CON SU DESCRIPCIÓN.
+//*************************************************************************** */
+//!------------------MATRIZ DINÁMICA CON HORAS Y DIAS CON SU DESCRIPCIÓN.------------------
 //todo -------OBJETO DE DIAS Y HORAS
 class nodo{ //my node that have all tha pointers of my ortogonal list
     constructor(data,x,y){
@@ -2048,7 +2233,7 @@ function cargaEventos(){
                 dial=items.dia
                 horal=items.hora
                 descl=items.desc
-                var add = new Eventobj(parseInt(idivendedor),mesl,horal,dial,descl);
+                var add = new Eventobj(parseInt(idivendedor),mesl,dial,horal,descl);
                 //!AGREGO CADA UNO DE LOS EVENTOS.
                 var list=sessionStorage.getItem("events") 
                 if(list==null){
@@ -2168,12 +2353,14 @@ function genReportCalendar(){
 }
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF EVENTOS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function genReportCalendar2(){
-    var id_vend=document.getElementById("vendid");
+    var avlVendedores=CargaListas()
+    var id_vend=document.getElementById("vendid").value;
     var combo = document.getElementById("meses");
     var mes = combo.options[combo.selectedIndex].value;
     if(id_vend!="" && mes!=""){
-        var avlVendedores=CargaListas()
+        
         var dotgen="{\n"
+        console.log(id_vend)
         dotgen += avlVendedores.gendot_Calendar(parseInt(id_vend),parseInt(mes));
         dotgen+="\n}"
         // create a network
@@ -2210,8 +2397,6 @@ function genReportCalendar2(){
         var network = new vis.Network(container, data, options);
         // return dotgen;
     }
-}
-function networkCalendar(){
 }
 // var list=[]
 // var jsoncreate=JSON.stringify(list)
@@ -2371,6 +2556,7 @@ function CargaListas(){
     console.log(vendedornew)
     return vendedornew;
 }
+
 function onloadName(){
     var myname=sessionStorage.getItem("namecurrent")
     document.getElementById("prin").innerHTML = myname;
