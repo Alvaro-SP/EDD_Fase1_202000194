@@ -221,6 +221,7 @@ class BST_prov{
         // let cadena="digraph arbol {\n";
         this.dot +=this.genNodos(tmphead);
         this.enlazar(tmphead)
+        return this.dot
         // this.dot +="}"
         // console.log(this.dot)
     }
@@ -360,6 +361,10 @@ function networkProveedores() {
     Proveedoresg=sessionStorage.getItem("BST")
     Proveedoresg=JSON.parse(Proveedoresg)
     var Proveedoresg = new BST_prov(Proveedoresg);
+    
+    var dotfortext= "digraph Chart";
+    // dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    
     Proveedoresg.dot = '{'
     if (Proveedoresg.head!=null){
         // Proveedoresg.genNodos(Proveedoresg.head)
@@ -367,9 +372,10 @@ function networkProveedores() {
     }
     
     Proveedoresg.dot += '}'
-    
+    dotfortext+=Proveedoresg.dot
     // return Proveedoresg.dot
      // create a network
+    document.getElementById("textar").value = dotfortext;
     var container = document.getElementById("mynetwork");
     var DOTstring = Proveedoresg.dot
     
@@ -1006,11 +1012,11 @@ class AVL_vend{
     //*Generación de los Dots
     gendot_Vendedores(){
         // let cadena="digraph arbol {\n";
-        let cadena="{\n";
+        let cadena="";
         cadena+= this.generar_nodos(this.head);
         cadena+="\n";
         cadena+=this.enlazar(this.head);
-        cadena+="\n}";
+        
         console.log(cadena);
         return cadena;
     }
@@ -1253,10 +1259,17 @@ function cargaVendedores(){
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF VENDEDORES ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function genReportVendedor(){
     var newalv = CargaListas();
-    var dotgen=newalv.gendot_Vendedores();
+    var dotfortext= "digraph Chart{ \n";
+    dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    var dotgen="{\n";
+    var auxdotgen=newalv.gendot_Vendedores();
+    dotgen+=auxdotgen
+    dotfortext+=auxdotgen
+    dotgen+="\n}";
+    dotfortext+="\n}";
     console.log(dotgen)
     
-    // document.getElementById("textar").value = dotgen;
+    document.getElementById("textar").value = dotfortext;
     //create a network
       var container = document.getElementById("mynetwork");
       var DOTstring = dotgen
@@ -1610,10 +1623,17 @@ function cargaClientes(){
 function genReportClients(){
     var newalv = CargaListas();
     var idvendedor=document.getElementById("vendid").value;
+    var dotfortext= "digraph Chart{ \n";
+    dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    
     var dotgen="{\n"
-    dotgen+=newalv.gendot_Clientes(parseInt(idvendedor));
+    var auxdotgen=newalv.gendot_Clientes(parseInt(idvendedor));
+    dotgen+=auxdotgen
+    dotfortext+=auxdotgen
     dotgen+="\n}";
+    dotfortext+="\n}";
     console.log(dotgen)
+    document.getElementById("textar").value = dotfortext;
     var DOTstring = dotgen
     
     // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
@@ -1645,8 +1665,7 @@ function genReportClients(){
     };
     var network = new vis.Network(container, data, options);
 }
-function networkClientes(){
-}
+
 
 //*************************************************************************** */
 //!--------------------------- CALENDARIO -----------------------------
@@ -2566,4 +2585,17 @@ function onloadName(){
 }
 // borrarSesion()
 
-
+// function Copytext() {
+//     /* Get the text field */
+//     var copyText = document.getElementById("textar").value;
+  
+//     /* Select the text field */
+//     copyText.select();
+//     copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  
+//     /* Copy the text inside the text field */
+//     navigator.clipboard.writeText(copyText.value);
+    
+//     /* Alert the copied text */
+//     alert("Copied the text: " + copyText.value);
+//   }

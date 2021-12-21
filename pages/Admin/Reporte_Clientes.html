@@ -395,6 +395,30 @@
                       <div id="mynetwork" style="height: 600px;"></div>
                     </div>
                 </div>
+                <h3 >puede copiar y pegar en graphviz online en formato dot:</h3>
+                <button class="js-textareacopybtn">Copy Clipboard</button>
+                <textarea id="textar" class="js-copytextarea" name="textar" rows="20" cols="30"></textarea>
+                <script>
+                  // function Copytext() {
+                    var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
+
+                    copyTextareaBtn.addEventListener('click', function(event) {
+                      var copyTextarea = document.querySelector('.js-copytextarea');
+                      copyTextarea.focus();
+                      copyTextarea.select();
+
+                      try {
+                        var successful = document.execCommand('copy');
+                        var msg = successful ? 'successful' : 'unsuccessful';
+                        console.log('Copying text command was ' + msg);
+                      } catch (err) {
+                        console.log('Oops, unable to copy');
+                      }
+                      window.open("https://dreampuf.github.io/GraphvizOnline/", '_blank');
+                    });
+                    // }
+
+                  </script>
                 <!-- <h3>puede copiar y pegar en graphviz online en formato neato:</h3>
                 <textarea id="textar" name="textar" rows="20" cols="30"></textarea> -->
                 </div>
