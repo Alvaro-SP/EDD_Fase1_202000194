@@ -4,7 +4,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Carga de Clientes</title>
+    <title>Reporte Ventas</title>
+    <script type="text/javascript" src="../../ProgramLogic/vis-network.min.js"></script>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -22,7 +23,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body>
+  <body onload="genReportVentas()">
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -124,6 +125,7 @@
                 </ul>
               </div>
           </li>
+
           <!-- ! inicio FASE 2 -->
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic">
@@ -176,6 +178,30 @@
             </div>
           </li>
           <!-- !FIN FASE 2 -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/tables/basic-table.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/charts/chartjs.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Reportes</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/icons/mdi.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-contacts"></i>
+              </span>
+              <span class="menu-title">Carga Masiva</span>
+            </a>
+          </li> -->
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
@@ -225,10 +251,18 @@
                 <li class="nav-item"> <a class="nav-link" href="Reporte_UsuariosEncriptados.html"> Usuarios Encriptados </a></li>
                 <li class="nav-item"> <a class="nav-link" href="Reporte_Blockchain.html"> BlockChain </a></li>
                 <!-- ! FIN FASE 2 -->
+
               </ul>
             </div>
           </li>
-          
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li> -->
         </ul>
       </nav>
       <!-- partial -->
@@ -403,33 +437,54 @@
             </div>
             
             <div class="row">
-              <div class="col-md-5 grid-margin stretch-card">
+              <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">Carga Masiva de Clientes</h3>
-                    <img src="../../assets/images/client.png" width="300" height="300" alt="admin">                    
-                  </div>
+                    <h3 class="card-title">REPORTE DE VENTAS REGISTRADAS </h3>
+                    
+
+
+                    <!-- <img src="../../assets/images/dadmin.png" width="300" height="300" alt="admin">                     -->
+                    
+                    
+                    <div id="review" style="height: 600px; overflow: scroll;">
+                      <div id="error"></div>
+                    </div>        
                 </div>
-              </div>
-              <div class="col-md-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Seleccione el archivo JSON</h4>
-                    <p class="card-description"> Solo Archivo JSON permitido. </p>
-                    <form class="forms-sample">
-                      <div class="form-group row">
-                        <label for="idi" class="col-sm-3 col-form-label">File:</label>
-                        
-                        <div class="btn btn-success">
-                                <p class="texto">CARGA DE CLIENTES</p>
-                                <input id="upload-json" type="file" class="btn_enviar" accept=".json">
-                        </div>
-                      </div>
-                    </form>
-                    <button onclick="cargaClientes()" type="submit" class="btn btn-primary mr-2">Submit</button>
-                      <button class="btn btn-dark">Cancel</button>
-                  </div>
-                </div>
+                <button id="generate_btn" disabled style="font-size: 120%"><b>Loading...</b>
+                  <!-- The "update"  -->
+                  </button>
+                  <!-- <div id="review" class="">
+                      <div id="error"></div> -->
+                    <!-- <div id="graphviz_svg_div">
+                      
+                      </div> -->
+                  <!-- </div> -->
+                <h3 >puede copiar y pegar con el boton, en graphviz online en formato dot:</h3>
+                <button class="js-textareacopybtn">Copy Clipboard</button>
+                <textarea id="textar" class="js-copytextarea" name="textar" rows="5" cols="30"></textarea>
+                <script>
+                  // function Copytext() {
+                    var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
+
+                    copyTextareaBtn.addEventListener('click', function(event) {
+                      var copyTextarea = document.querySelector('.js-copytextarea');
+                      copyTextarea.focus();
+                      copyTextarea.select();
+
+                      try {
+                        var successful = document.execCommand('copy');
+                        var msg = successful ? 'successful' : 'unsuccessful';
+                        console.log('Copying text command was ' + msg);
+                      } catch (err) {
+                        console.log('Oops, unable to copy');
+                      }
+                      window.open("https://dreampuf.github.io/GraphvizOnline/", '_blank');
+                    });
+                    // }
+
+                  </script></div>
+                
               </div>
               
 
@@ -468,9 +523,46 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-    <script src="cargaJSON.js"></script>
     <script src="../../circular-json.js"></script>
+    <script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+    <script language="javascript" type="text/javascript" src="../../viz.js"></script>
+    <script language="javascript" type="text/javascript" src="../../site.js"> </script>
+    <!-- <script src="../../ProgramLogic/main.js"></script> -->
     <script src="../../ProgramLogic/main.js"></script>
-    
+    <script type="text/javascript">
+    //   // create a network
+    //   var container = document.getElementById("mynetwork");
+    //   var DOTstring = networkProveedores()
+      
+    //   // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+      
+    //   console.log(DOTstring)
+    //   // console.log("Holaa esta es una prueba.")
+
+    //   var parsedData = vis.parseDOTNetwork(DOTstring);
+    //   var data = {
+    //       nodes: parsedData.nodes,
+    //       edges: parsedData.edges
+    //   }
+    //   var options = {
+    //       nodes: {
+    //           shape: 'box',
+    //           borderWidth: 2,                
+    //           color:"yellow",
+    //       },        
+    //       layout: {
+    //           hierarchical: {
+    //               levelSeparation: 100,
+    //               nodeSpacing: 100,
+    //               parentCentralization: true,
+    //               direction: 'UD',        // UD, DU, LR, RL
+    //               sortMethod: 'directed',  // hubsize, directed
+    //               shakeTowards: 'roots'  // roots, leaves                        
+    //           },
+    //       },                        
+    //   };
+    //   var network = new vis.Network(container, data, options);
+      </script> 
+   
   </body>
 </html>

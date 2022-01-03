@@ -1,0 +1,54 @@
+{ 
+    "rutas":[  
+        {  
+        "id":1,
+        "nombre"  :"bodega1"  ,
+        "adyacentes":[  
+            {  
+            "id":3  ,
+            "nombre"  :"bodega3"  ,
+            "distancia"  :15
+            }, 
+        
+            {  
+            "id"  :  5  ,
+            "nombre"  :"bodega5"  ,
+            "distancia"  :  5
+            }
+        
+        ]
+        },  
+        {  
+        "id"  :  2  ,
+        "nombre"  :"bodega2",
+        "adyacentes":[  
+            {  
+            "id":3  ,
+            "nombre"  :"bodega3",
+            "distancia"  :  5
+            },  
+            {  
+            "id"  :  4  ,
+            "nombre"  :"bodega4",
+            "distancia"  :  2
+            }
+        ]
+        },  
+        {  
+        "id"  :  3  ,
+        "nombre"  :"bodega3",
+        "adyacentes":[  
+            { 
+            "id":1  ,
+            "nombre"  :"bodega1",
+            "distancia"  :15
+            },  
+            {
+            "id":2,
+            "nombre":"bodega2",
+            "distancia":5
+            }
+        ]
+        }
+    ]
+}

@@ -439,7 +439,6 @@ function testBST(){
 }
 
 
-
 //*************************************************************************** */
 //!---------------------------VENDEDORES AVL -----------------------------
 //TODO ------------------OBJETO VENDEDORES-------------
@@ -2283,7 +2282,7 @@ function cargaEventos(){
     alert("Se han cargado los CLIENTES Correctamente.!!")
     reader.readAsText(file);
     
-}
+};
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF EVENTOS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function RegistrarEvento(){
     var idcurrent=sessionStorage.getItem("idcurrent")
@@ -2325,7 +2324,7 @@ function RegistrarEvento(){
         alert("Rellene todos los campos")
     }
     
-}
+};
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF EVENTOS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function genReportCalendar(){
     var avlVendedores=CargaListas()
@@ -2369,7 +2368,7 @@ function genReportCalendar(){
     var network = new vis.Network(container, data, options);
     // return dotgen;
     
-}
+};
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF EVENTOS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function genReportCalendar2(){
     var avlVendedores=CargaListas()
@@ -2416,7 +2415,1757 @@ function genReportCalendar2(){
         var network = new vis.Network(container, data, options);
         // return dotgen;
     }
+};
+
+//*************************************************************************** */
+//!------------------ARBOL B DE ORDEN 5 DE LA CARGA MASIVA.------------------
+// Los campos utilizados para los productos son:
+// • Id
+// • Nombre
+// • Precio
+// • Cantidad
+//TODO ------------------OBJETO PRODUCTOS-------------
+function Productosobj(id,  name, price, cant,total){
+    this.id=id;
+    this.name=name;
+    this.price=price;
+    this.cant=cant;
+    this.total=total;
 }
+
+//! ÁRBOL B DE LOS PRODUCTOS
+//! Creación de mi Arbol B de grado 5
+//primero que nada se crea el nodo que necesitaremos para  nuestro arbol
+class nodoBTree{
+    constructor(data){
+        this.data=data
+        this.izquierda=null  //sirven como apuntadores del arbol de tipo paginas
+        this.derecha=null
+        this.siguiente=null  //sirven como apuntadores de lista del nodo 
+        this.prev=null
+    }
+}
+//* Lista para guardar los valores 
+class lista_Btreenode{
+    constructor(){
+        this.head=null
+        this.end=null
+        this.size=0
+    }
+    insertar(nuevo){
+        if(this.head==null){
+            this.head=nuevo
+            this.end=nuevo;
+            this.size++;
+            return true;
+        }else{// esto valida si solo se tiene un dato en el arbol
+            if(this.head == this.end){ 
+                if(nuevo.data.id < this.head.data.id){
+                    nuevo.siguiente = this.head;
+                    this.head.prev = nuevo;
+                    //cambiar punteros de paginas
+                    this.head.izquierda = nuevo.der;
+
+                    this.head = nuevo;
+                    this.size++;
+                    return true;
+                }else if(nuevo.data.id> this.end.data.id){
+                    this.end.siguiente = nuevo;
+                    nuevo.prev = this.end;
+                    //cambiar punteros de paginas
+                    this.end.der = nuevo.izquierda;
+
+                    this.end = nuevo;
+                    this.size++;
+                    return true;
+                }else{ // el dato es igual al primero
+                    console.log("Ya existe un dato con ese valor en la lista");
+                    return false;
+                }
+            }else{ //ahora bien si se tiene mas de un dato
+                if(nuevo.data.id < this.head.data.id){
+                    //si el dato es menor que mi cabeza
+                    nuevo.siguiente = this.head;
+                    this.head.prev = nuevo;
+                    //se cambian los punteros de mi pagina
+                    this.head.izquierda = nuevo.derecha;
+
+                    this.head = nuevo;
+                    this.size++;
+                    return true;
+                }else if(nuevo.data.id> this.end.data.id){
+                    this.end.siguiente = nuevo;
+                    nuevo.prev = this.end;
+                    //cambiar punteros de paginas
+                    this.end.derecha = nuevo.izquierda;
+
+                    this.end = nuevo;
+                    this.size++;
+                    return true;
+                }else{
+                    let aux = this.head;
+                    while(aux != null){
+                        if(nuevo.data.id < aux.data.id){
+                            nuevo.siguiente = aux;
+                            nuevo.prev = aux.prev;
+                            // se cambian los punteros de las paginas
+                            aux.izquierda= nuevo.derecha;
+                            aux.prev.derecha = nuevo.izquierda;
+                            
+                            aux.prev.siguiente = nuevo;
+                            aux.prev = nuevo;
+                            this.size++;
+                            return true;
+                        }else if(nuevo.data.id == aux.data.id){
+                            console.log("Ya existe un dato con ese valor en la lista");
+                            return false;
+                        }else{
+                            aux = aux.siguiente;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+// Página del  arbol necesaria para crear el Arobol B
+class mypage{
+    constructor(){
+        this.root=false
+        this.maxkey=4
+        this.minkey=2
+        this.size=0
+        this.keys=new lista_Btreenode();
+    }
+    insertInpage(node){
+        if(this.keys.insertar(node)){
+            this.size=this.keys.size;
+            if(this.size<5){
+                return this;
+            }else if(this.size==5){
+                return this.divPage(this)
+            }
+        }
+    }
+
+    divPage(page){
+        var temp = page.keys.head;
+        //con esto nos ubicamos en la posicion a la mitad de nuestra lista para subdividir
+        for(var i=0; i<2; i++){
+            temp=temp.siguiente;
+        }
+        var first = page.keys.head;
+        var second = page.keys.head.siguiente;
+        var third = temp.siguiente;
+        var fourth = page.keys.end;
+
+        first.siguiente = null;
+        first.prev = null;
+
+        second.siguiente = null;
+        second.prev = null;
+
+        third.siguiente = null;
+        third.prev = null;
+
+        fourth.siguiente = null;
+        fourth.prev = null;
+
+        temp.siguiente = null;
+        temp.prev = null;
+
+        // Aqui se crean las nuevas paginas.
+        var page_left = new mypage();
+        page_left.insertInpage(first);
+        page_left.insertInpage(second);
+        // ahora inserto la pagina derecha.
+        var pag_fight = new mypage()
+        pag_fight.insertInpage(third);
+        pag_fight.insertInpage(fourth);
+
+        temp.izquierda = page_left;
+        temp.derecha = pag_fight;
+
+        return temp;
+
+    }
+
+    isSheet(page){
+        if(page.keys.head.izquierda==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+//Now i can declare my Tree B class that being the principal class.
+class myTreeB{
+    constructor(){
+        this.root=null;
+        this.order=5;
+        this.heigth=0;
+        this.dot=""
+    }
+    insertB(data){
+        var newNode = new nodoBTree(data);
+        if(this.root==null){
+            this.root= new mypage();
+            this.root.root=true;
+            this.root=this.root.insertInpage(newNode);
+        }else{
+            if(this.heigth==0){
+                var response = this.root.insertInpage(newNode);
+                // si la raiz o cabeza no se ha dividido ...
+                if(response instanceof mypage){
+                    this.root = response;
+                }else{
+                    this.heigth++;
+                    this.root = new mypage();
+                    this.root = this.root.insertInpage(response);
+                }
+            }else{ 
+                //ssi ya hay mas de una pagina tenemos que recorrer el arbol para despues insertar el nuevo nodo.
+                if(this.root == null){
+                    console.log("La raiz esta vacia.")
+                    return;
+                }   
+                var response = this.insertar_recorrer(newNode,this.root);
+                if(response instanceof nodoBTree){ // la root se dividio
+                    this.heigth++;
+                    this.root = new mypage();
+                    this.root = this.root.insertInpage(response);
+                }else if(response instanceof mypage){
+                    this.root = response;
+                }
+            }
+        }
+    }
+
+    insertar_recorrer(newnode, actual_page){
+        if(actual_page.isSheet(actual_page)){
+            var response = actual_page.insertInpage(newnode);
+            return response;
+        }else{// si el dato es menor que la cabeza de mi clave de la pagina actual se va a la izquierda
+            if(newnode.data.id < actual_page.keys.head.data.id){ 
+                var response = this.insertar_recorrer(newnode,actual_page.keys.head.izquierda);
+                //en este instante la pagina esta dividida y necesito insertar en la pagina actual
+                if(response instanceof nodoBTree){  //verifico que la respuesta sea instancia del nodo
+                    return actual_page.insertInpage(response);
+                }else if(response instanceof mypage){
+                    actual_page.keys.head.izquierda = response;
+                    return actual_page;
+                }
+                //sino se va a la derecha porque el dato del nuevo nodo es mayor
+            }else if(newnode.data.id > actual_page.keys.end.data.id){ 
+                var response = this.insertar_recorrer(newnode,actual_page.keys.end.derecha);
+                if(response instanceof nodoBTree){
+                    return actual_page.insertInpage(response);
+                }else if(response instanceof mypage){
+                    actual_page.keys.end.derecha = response;
+                    return actual_page;
+                }
+            }else{ 
+                // va en los apuntadores de los nodos de en medio
+                var aux = actual_page.keys.head;
+
+                while(aux != null){
+                    if(newnode.data.id < aux.data.id){
+                        var response = this.insertar_recorrer(newnode, aux.izquierda);
+                        if(response instanceof nodoBTree){ 
+                            return actual_page.insertInpage(response);
+                        }else if(response instanceof mypage){
+                            aux.izquierda = response;
+                            aux.prev.derecha = response;
+                            return actual_page;
+                        }
+                    }else if(newnode.data.id == aux.data.id){
+                        return actual_page;
+                    }else{
+                        aux = aux.siguiente;
+                    }
+                }
+            }
+        }
+        return this;
+    }
+
+    gendot(){
+        var cadena="digraph B_Tree{\n";
+        this.dot="{\m"
+        cadena+="rankr=TB;\n";
+        this.dot+="rankr=TB;\n";
+
+        cadena+="node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+        cadena+= this.graph_nodes(this.root);
+        this.dot+= this.graph_nodes2(this.root);
+        cadena+=  this.enlazar(this.root);
+        this.dot+=  this.enlazar(this.root);
+        cadena+="}\n"
+        this.dot+="}\n"
+        return cadena;
+    }
+
+    graph_nodes(raiz_actual){
+        var cadena="";
+
+        if(raiz_actual.isSheet(raiz_actual)){ 
+            cadena+="node[shape=record label= \"<p0>"
+            var contador=0;
+            var aux = raiz_actual.keys.head;
+            while(aux!=null){
+                contador++;//+"/"+aux.data.name+"/"+aux.data.price+"/"+aux.data.cant
+                cadena+="|{"+aux.data.id+"/"+aux.data.name+"/"+aux.data.price+"/"+aux.data.cant+"}|<p"+contador+"> ";
+                aux= aux.siguiente;
+            }
+            cadena+="\"]"+raiz_actual.keys.head.data.id+";\n";
+            return cadena;
+        }else{
+            cadena+="node[shape=record label= \"<p0>"
+            var contador=0;
+            var aux = raiz_actual.keys.head;
+            while(aux!=null){
+                contador++;
+                cadena+="|{"+aux.data.id+"/"+aux.data.name+"/"+aux.data.price+"/"+aux.data.cant+"}|<p"+contador+"> ";
+                aux= aux.siguiente;
+            }
+            cadena+="\"]"+raiz_actual.keys.head.data.id+";\n";
+
+            //recorrer los hicos de cada clave
+            aux = raiz_actual.keys.head;
+            while(aux != null){
+                cadena+= this.graph_nodes(aux.izquierda);
+                aux = aux.siguiente;
+            }
+            cadena+= this.graph_nodes(raiz_actual.keys.end.derecha);
+            return cadena;
+        }   
+    }
+
+    graph_nodes2(raiz_actual){
+        var cadena="";
+
+        if(raiz_actual.isSheet(raiz_actual)){ 
+            cadena+="node[shape=record fillcolor=\"yellow\" label= \""
+            var contador=0;
+            var aux = raiz_actual.keys.head;
+            while(aux!=null){
+                contador++;
+                cadena+="|{"+aux.data.id+"}|";
+                aux= aux.siguiente;
+            }
+            cadena+="\"]"+raiz_actual.keys.head.data.id+";\n";
+            return cadena;
+        }else{
+            cadena+="node[shape=record fillcolor=\"yellow\" label= \""
+            var contador=0;
+            var aux = raiz_actual.keys.head;
+            while(aux!=null){
+                contador++;
+                cadena+="|{"+aux.data.id+"}|";
+                aux= aux.siguiente;
+            }
+            cadena+="\"]"+raiz_actual.keys.head.data.id+";\n";
+
+            //recorrer los hicos de cada clave
+            aux = raiz_actual.keys.head;
+            while(aux != null){
+                cadena+= this.graph_nodes2(aux.izquierda);
+                aux = aux.siguiente;
+            }
+            cadena+= this.graph_nodes2(raiz_actual.keys.end.derecha);
+            return cadena;
+        }   
+    }
+
+    enlazar(raiz_actual){
+        let cadena="";
+        if(raiz_actual.isSheet(raiz_actual)){
+            return ""+raiz_actual.keys.head.data.id+";\n";
+        }else{
+            
+
+            let aux = raiz_actual.keys.head;
+            let contador =0;
+            let current_root_txt = raiz_actual.keys.head.data.id;
+            while(aux != null){
+                cadena+= "\n"+current_root_txt+":p"+contador+"->"+this.enlazar(aux.izquierda);
+                contador++;
+                aux = aux.siguiente;
+            }
+            cadena+="\n"+current_root_txt+":p"+contador+"->"+this.enlazar(raiz_actual.keys.end.derecha);
+            return cadena;
+        }
+    }
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF PRODUCTS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function RegistrarProductos(){
+    var idi=document.getElementById("idi").value;
+    var name=document.getElementById("nombre").value;
+    var price=document.getElementById("precio").value;
+    var cant=document.getElementById("cantidad").value;
+    
+    // Proveedoresg=localStorage.getItem("BST")
+    if( idi!=""&& name!=""&& price!=""&& cant!=""){
+        var add = new Productosobj(parseInt(idi), name, price, cant);
+        // var lista_tem = JSON.parse(sessionStorage.getItem("vendedor"));
+        var list=sessionStorage.getItem("products")  
+        if(list==null){
+            list="[]"
+        }       
+        console.log("AGREGANDO UN PRODUCTO-----------")
+        console.log(list)
+        listjson = JSON.parse(list);
+        console.log(listjson)
+
+        var existevende=false
+        listjson.forEach(function(items) {
+                if(items.id==idi){
+                    console.log("ya existe un producto aqui")
+                    existevende=true
+                }
+        });
+        if(!existevende){
+            console.log("insertando un producto")
+            listjson.push(add)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("products",jsoncreate)
+            alert(" El Producto se ha ingresado correctamente")
+        }else{
+            alert("El id del PRODUCTO ya existe en el sistema.")
+        }
+    }else{
+        alert("Rellene todos los campos")
+    }
+    
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ DELETE OF PRODUCTS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function deleteProducts(){
+    var idi=document.getElementById("idi").value;
+    if(idi!=""){
+        var list=sessionStorage.getItem("products")  
+        if(list==null){
+            list="[]"
+        }
+        console.log("ELIMINANDO UN PRODUCTO-----------")
+        listjson = JSON.parse(list);
+        var existevende=false
+        var pos=0
+        var posaux=0
+        listjson.forEach(function(items) {
+                if(items.id==idi){
+                    console.log("si se encontró el producto aqui")
+                    existevende=true
+                    posaux=pos
+                }
+                pos++;
+        });
+        if(!existevende){
+            
+            alert(" El Producto NO se encontró en el sistema")
+        }else{
+            console.log("eliminando un producto")
+            listjson.splice(posaux,1)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("products",jsoncreate)
+            alert("El id del PRODUCTO se ha ELIMINADO.")
+        } 
+        // if(Vendedoresg!=null){ 
+        //     if(Vendedoresg.intree(parseInt(idi))){
+        //         console.log("antes de borrar")
+        //         console.log(Vendedoresg)
+        //         Vendedoresg.eliminarVendedor(Vendedoresg.head,parseInt(idi))
+        //         // console.log(Vendedoresg.removeProv(parseInt(idi)))
+        //         console.log("despues de borrar")
+        //         console.log(Vendedoresg)
+        //         sessionStorage.setItem("avl",JSON.stringify(Vendedoresg))
+        //         alert("El Vendedoresg se ha eliminado correctamente")
+        //         return
+        //     }else{
+        //         alert("El Vendedoresg no se encuentra en el sistema.")
+        //     }
+        // }
+        // else{
+        //     alert("Aun no hay Vendedores")
+        // }
+        // console.log("*********Lista de Vendedoresg*********")
+        // Vendedoresg.inorder(Vendedoresg.head);
+    }else{
+        alert("Favor ingresar un ID del Producto")
+    }
+}
+
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ MASSIVE CHARGE OF PRODUCTS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function cargaProducts(){
+    var input = document.getElementById('upload-json')
+    //la tipica lectura de un JSON 
+    // {
+    //     "id":1,
+    //     "nombre":"juan",
+    //     "edad": 25,
+    //     "correo": "juan@gmail.com",
+    //     "password": "juanito1234"
+    // },
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var json;
+        tempstring=String(e.target.result)
+        //se parsea.
+        // json = JSON.parse(e.target.result);
+        json = JSON.parse(tempstring);
+        console.log(json)
+        var idi =    ""
+        var name=   ""
+        var price = ""
+        var cant=    ""
+        json.productos.forEach(function(items) {
+            console.log('*********************');
+            console.log('-->',items.id);
+            console.log('-->',items.nombre);
+            console.log('-->',items.precio);
+            console.log('-->',items.cantidad);
+            idi=items.id
+            name=items.nombre
+            price=items.precio
+            cant=items.cantidad
+            var add = new Productosobj(parseInt(idi),name,price,cant);
+            //!AGREGO CADA UNO DE LOS PRODUCTOS.
+            var list=sessionStorage.getItem("products") 
+            if(list==null){
+                list="[]"
+            }        
+            console.log("AGREGANDO UN PRODUCTO-----------")
+            listjson = JSON.parse(list);
+            var existevende=false
+            listjson.forEach(function(items) {
+                    if(items.id==idi){
+                        console.log("ya existe un Producto aqui")
+                        existevende=true
+                    }
+            });
+            if(!existevende){
+                console.log("insertando un producto")
+                listjson.push(add)
+                var jsoncreate=JSON.stringify(listjson)
+                sessionStorage.setItem("products",jsoncreate)
+                console.log(" El Producto se ha ingresado correctamente")
+            }else{
+                console.log("El id del PRODUCTO ya existe en el sistema.")
+            }
+        });
+
+
+    };
+    alert("Se han cargado los PRODUCTOS Correctamente.!!")
+    reader.readAsText(file);
+    
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF PRODUCTS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function genReportProducto(){
+    var newBTree = CargaListasProducts();
+    // var newalv = CargaListas();
+    
+    var auxdotgen=newBTree.gendot();
+    
+    console.log(auxdotgen);
+    
+    document.getElementById("textar").value = auxdotgen;
+    //create a network
+    // var container = document.getElementById("mynetwork");
+    // var DOTstring = dotgen;
+    
+    // // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+    
+    // console.log(DOTstring)
+    // // console.log("Holaa esta es una prueba.")
+
+    // var parsedData = vis.parseDOTNetwork(DOTstring);
+    // var data = {
+    //     nodes: parsedData.nodes,
+    //     edges: parsedData.edges
+    // }
+    // var options = {
+    //     nodes: {
+    //         shape: 'box',
+    //         borderWidth: 2,                
+    //         color:"yellow",
+    //     },        
+    //     layout: {
+    //         hierarchical: {
+    //             levelSeparation: 150,
+    //             nodeSpacing: 170,
+    //             parentCentralization: false,
+    //             direction: 'UD',        // UD, DU, LR, RL
+    //             sortMethod: 'directed',  // hubsize, directed
+    //             shakeTowards: 'roots'  // roots, leaves                        
+    //         },
+    //     },                        
+    // };
+    // var network = new vis.Network(container, data, options);
+
+
+
+}
+
+//*************************************************************************** */
+//!------------------TABLA HASH DE LAS VENTAS REALIZADAS.------------------
+//TODO ------------------OBJETO VENTAS-------------
+function Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad,precio, nombre){
+    this.idVenta=idVenta;
+    this.idVendedor=idVendedor;
+    this.idCliente=idCliente;
+    this.idproduct=idproduct;
+    this.cantidad=cantidad;
+    this.precio=precio;
+    this.nombre=nombre;
+};
+//TODO ------------------OBJETO VENTAS-------------
+function ProductsNewobj(idVenta,idVendedor, idCliente, idproduct,nombre,price,cant,total){
+    this.idVenta=idVenta;
+    this.idVendedor=idVendedor;
+    this.idCliente=idCliente;
+    this.idproduct=idproduct;
+    this.nombre=nombre;
+    this.price=price;
+    this.cant=cant;
+    this.total=total;
+};
+class nodoHash{//este es el nodo  que apunta a mi objeto de datos de ventas
+    constructor(data){
+        this.data=data;
+        this.products= new LD_product();
+    }
+}
+class HashTable{//tabla hash que contendra la transaccion de ventas
+    constructor(){
+        this.keys=this.start_array(7)
+        this.keys_used=0;
+        this.size=7;
+        this.contcolision=0
+        this.graph=""
+    }
+    start_array(size){
+        var keys=[]
+        for(var i=0; i<size,i++;){
+            keys[i]=null
+        };
+        return keys
+    }
+    compute_hash(data){
+        var result=0;
+        result=data %this.size;
+        return result;
+    }
+    solColision(index){
+        var new_index=0;
+        var i=0;
+        var enabled=false;
+        while(enabled==false){
+            new_index=index+Math.pow(i,2)
+            if(new_index>=this.size){
+                new_index=new_index-this.size;
+            }
+            //se necesita validar que la posicion del nuevo indice sea disponible:
+            if(this.keys[new_index]==null){
+                enabled=true;
+                this.contcolision++;
+            }
+            
+            
+            i++;
+        }
+        return new_index;
+    }
+    insert(newNode){
+        // var newNode= new nodoHash(value)
+        var index=this.compute_hash(newNode.data.idVenta);
+        //si la posición está disponible
+        if(this.keys[index]==null){
+            this.keys[index]=newNode;
+            this.keys_used++;
+        }else{
+            index=this.solColision(index);
+            this.keys[index]=newNode;
+            this.keys_used++;
+        }
+        var use_percent = this.keys_used/this.size;
+        if(use_percent>=0.5){
+            this.rehashing();//aqui se hace el rehashing suponiendo que el porcentaje de la tabla excede el 50% DE SU ESPACIO LLENO
+        }
+        this.insertProductVenta(newNode)
+    }
+    insertProductVenta(productnew){
+        //!Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
+        for(var i=0;i<this.size;i++){
+            if(this.keys[i]){
+                console.log(this.keys[i])
+                if(this.keys[i].data.idVendedor==productnew.data.idVendedor && this.keys[i].data.idCliente==productnew.data.idCliente);
+                // var productNode=this.buscarNodoProducto(productnew.idproduct)
+                //!Productosobj(id,  name, price, cant,total)
+                var total=parseFloat(productnew.data.precio) * parseFloat(productnew.data.cantidad)
+                var newadd=new ProductsNewobj(productnew.data.idVenta,productnew.data.idVendedor, productnew.data.idCliente, productnew.data.idproduct,productnew.data.nombre,productnew.data.precio,productnew.data.cantidad,total)
+                // console.log(productNode)
+                if (this.keys[i].products){
+                    this.keys[i].products.add(newadd);
+                    console.log("se ha ingresado el producto en la Venta encontrada.");
+                }else{
+                    console.log("no existe un producto aún")
+                }
+            }else{
+                console.log("No se encontró el producto!!!");
+            };
+        }
+    }
+    rehashing(){
+        //se busca el siguiente numero que sea primo
+        let cousin = false;
+        var newtam = this.size;
+        while(cousin==false){
+            newtam++; 
+            var cont=0;
+            for(let i=newtam;i>0;i--){
+                // console.log("b", cont)
+                // console.log(newtam%i)
+                if(newtam%i ==0){
+                    cont++;
+                }
+            }
+            //se valida cuantas veces se dividió exactamente 
+            if(cont==2){
+                cousin=true;
+            }
+        }
+        //se crea un nuevo arreglo con el tamaño del siguiente numero primo
+        var keys_aux = this.keys;
+        this.size=newtam;
+        this.keys=this.start_array(newtam);
+        this.keys_used=0;
+        for(var i=0;i<keys_aux.length;i++){
+            if(keys_aux[i]!=null){
+                this.insert(keys_aux[i]);
+            }
+        }
+        
+    }
+    buscarNodoProducto(idproduct){
+        var list4=sessionStorage.getItem("products")
+        if(list4==null){
+            list4="[]"
+        }
+        json4 = JSON.parse(list4);
+        console.log(json4)
+        var idi,name1,price1,cant1= ""
+        json4.forEach(function(items) {
+            console.log('*********************');
+            console.log('-->',items.id);
+            console.log('-->',items.name);
+            console.log('-->',items.price);
+            console.log('-->',items.cant);
+            idi=items.id;
+            name1=items.name;
+            price1=items.price;
+            cant1=items.cant;
+            if(idi==idproduct){
+                return JSON.parse(items)
+            }
+            // var add = new Productosobj(parseInt(idi),name1,price1,cant1);
+            // productnew.insertB(add);
+            });
+        return null;
+    }
+    isVendedorProduct(key){
+
+    }
+    show(){
+        for(var i=0;i<this.size;i++){
+            if(this.keys[i]!=null){
+                console.log("--->"+this.keys[i].data);
+            }else{
+                console.log("**********************************")
+            }
+        }
+    }
+    graphTable(){
+        this.graph="digraph HashTable{\n";
+        for(var i=0;i<this.size;i++){ 
+            if(this.keys[i]){
+                if(this.keys[i]){
+                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"|"+this.keys[i].data.idCliente+"/"+this.keys[i].data.idVendedor+"\"]"+this.keys[i].data.idVenta+";\n";
+                    this.graph+=  this.keys[i].products.obtainproducts(this.keys[i].data.idVenta)
+                }else{
+                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"| "+"\"]"+this.keys[i].data.idVenta+";\n";
+                }
+            }           
+            
+        }
+        this.graph+="\"]a;\n";
+
+        this.enlazarVentas();
+        this.graph+="}\n"
+        return this.graph
+    }
+    enlazarVentas(){
+        for(var i=0;i<this.size;i++){
+            if(this.keys[i]){
+            if(i==this.size-1){
+                this.graph+=this.keys[i].data.idVenta+"; "
+                return
+            }            
+            this.graph+=this.keys[i].data.idVenta+" -> "     
+            } 
+        }
+    }
+}
+//! LISTA ENLAZADA DE LOS PRODUCTOS DE CADA VENTA
+class nodeLD_product{
+    constructor(data,next){
+        this.data=data;
+        this.next=next;
+    };
+};
+class LD_product{
+    constructor(){
+        this.head = null;
+        this.size = 0;
+    };
+    add(data){
+        const newNode = new nodeLD_product(data, null);
+        if(!this.head){
+            this.head=newNode
+        }else{
+            let temp = this.head; //registro de la cabeza
+            while(temp.next){
+                temp=temp.next;
+            };
+            temp.next=newNode;
+        };
+        this.size++; //aumenta el tamaño de la lista.
+    };
+    
+    //REMOVER UN ELEMENTO DE LA LISTA BASADO EN EL ID DEL CLIENTE
+    deleteData(data){
+        let current = this.head;
+        let previous = null;
+        while(current!=null){
+            if(current.data.id===data){
+                if(!previous){
+                    this.head=current.next;
+
+                }else{
+                    previous.next=current.next;
+                };
+                this.size--;
+                return current.data;
+            };
+            previous=current;
+            current=current.next;
+        };
+        return null;
+    };
+    //REVISAR SI UN CLIENTE SE ENCUENTRA EN LA LISTA
+    isinList(id){
+        if(!this.size){
+            return null
+        };
+        let current = this.head;
+        // let result= '';
+        while(current){
+            // result += current.data.id+' -> ';
+            if(current.data.id==id){
+                return true
+            }
+            current=current.next;
+        };
+        // result += 'X';
+        // console.log(result)
+        return false;
+
+        // let aux=this.head;
+        // while(aux!=null){
+        //     console.log(aux.data.id)
+        //     if(aux.data.id==id){
+        //         return true
+        //     }
+        //     aux=aux.siguiente;
+        // }
+        // console.log("no se hallo")
+        // return false
+    };
+    //REVISAR SI LA LISTA ESTA VACÍA
+    isEmpty(){
+        return this.size === 0;
+    };
+    getSize(){
+        return this.size;
+    };
+    //FUNCIÓN IMPRIMIR
+    print(){
+        if(!this.size){
+            return null
+        };
+        let current = this.head;
+        let result= '';
+        while(current){
+            result += current.data.idVenta+' -> ';
+            current=current.next;
+        };
+        result += 'X';
+        console.log(result)
+        return result;
+    };
+    graphlist(){
+        if(!this.size){
+            return null
+        };
+        let current = this.head;
+        var current2=this.head
+        let cadena="";
+        let dot="";
+        cadena+= "digraph Matriz{ \n";
+        cadena+= "node[shape = box,width=0.7,height=0.7,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+        cadena+= "edge[style = \"bold\"]; \n"
+        //graficar el nodo matriz
+        cadena+="node[label = \"Clientes\" fillcolor=\" red\"]Inicio;"
+        dot+="Inicio[label = \"Clientes\" fillcolor=\" red\"];"
+        while(current){
+            cadena+="node[label = \""+current.data.id+"\n"+current.data.name+"\n"+current.data.mail+"\" fillcolor=\" orange\" ]x"+current.data.id+";\n"
+            dot+="x"+current.data.id+"[label = \""+current.data.id+"\n"+current.data.name+"\n"+current.data.mail+"\" fillcolor=\" orange\" ];\n"
+            // result += current.data.id+' -> ';
+            current=current.next;
+        };
+        console.log(dot)
+        while(current2.next){
+            cadena+="x"+current2.data.id+"->"+"x"+current2.next.data.id+";\n"
+            cadena+="x"+current2.next.data.id+"->"+"x"+current2.data.id+";\n"
+            dot+="x"+current2.data.id+"->"+"x"+current2.next.data.id+";\n"
+            dot+="x"+current2.next.data.id+"->"+"x"+current2.data.id+";\n"
+            
+            current2=current2.next;
+        }  
+        cadena+="}"  
+        console.log(cadena)    
+        return dot
+
+    }
+    obtainproducts(actualid){
+        let current = this.head;
+        if(!this.size){
+            return null
+        };
+        var current2=this.head
+        var tempstring=""
+        let cadena="";
+        var ranksame=""
+        ranksame+="rank=same {"+actualid;
+        console.log(current)
+        while(current){
+            cadena+="node[shape = record,fillcolor=\"skyblue\" color=\"black\" style=\"filled\" label=\""+current.data.id+"/"+current.data.name+"/"+current.data.price+"\"]"+"n"+current.data.id+"oo"+current.data.name+current.data.price+";\n";
+            current=current.next;
+        };
+        while(current2.next){
+            cadena+="n"+current2.data.id+"oo"+current2.data.name+current2.data.price+"->"+"n"+current2.next.data.id+"oo"+current2.next.data.name+current2.next.data.price+";\n"
+            ranksame+=" ; "+"n"+current2.data.id+"oo"+current2.data.name+current2.data.price
+            
+            current2=current2.next;
+        };
+        ranksame+="}\n";
+        tempstring+=cadena;
+        tempstring+=ranksame;
+        // console.log(tempstring);
+        return tempstring
+    };
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF VENTAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function RegistrarVentas(){
+    var vendedor=document.getElementById("vendedor").value;
+    var client=document.getElementById("cliente").value;
+    var idiproduct=document.getElementById("id").value;
+    var precio=document.getElementById("precio").value;
+    var nombre=document.getElementById("nombre").value;
+    var cant=document.getElementById("cantidad").value;
+    
+    // Proveedoresg=localStorage.getItem("BST")
+    if( idiproduct!=""&& vendedor!=""&& client!=""&& cant!=""&& precio!=""&& nombre!=""){
+        //id de la Venta GENERADO AUTOMÁTICAMENTE.
+        var idiVenta= sessionStorage.getItem("idiventa")
+        if(idiVenta==null){
+            idiVenta=0
+        }
+        idiVenta=parseInt(idiVenta)+1;
+
+        var add = new Ventasobj(parseInt(idiVenta), parseInt(vendedor), parseInt(client),parseInt(idiproduct), parseInt(cant), parseInt(precio), nombre);
+        // var lista_tem = JSON.parse(sessionStorage.getItem("vendedor"));
+        sessionStorage.setItem("idiventa",idiVenta)
+
+        var list=sessionStorage.getItem("ventas")  
+        if(list==null){
+            list="[]"
+        }       
+        console.log("AGREGANDO UNA VENTA-----------")
+        console.log(list)
+        listjson = JSON.parse(list);
+        console.log(listjson)
+
+        var existevende=false
+        listjson.forEach(function(items) {
+                if(items.idVenta==idiVenta){
+                    console.log("ya existe una Venta aqui")
+                    existevende=true
+                }
+        });
+        if(!existevende){
+            console.log("insertando una Venta")
+            listjson.push(add)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("ventas",jsoncreate)
+            alert(" La Venta se ha ingresado correctamente")
+        }else{
+            alert("El id de la Venta ya existe en el sistema.")
+        }
+    }else{
+        alert("Rellene todos los campos")
+    }
+    
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ MASSIVE CHARGE OF Ventas ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function cargaVentas(){
+    var input = document.getElementById('upload-json')
+    //la tipica lectura de un JSON 
+    // {
+    //     "id":1,
+    //     "eventos":
+    //         [
+    //         {
+    //             "mes":1,
+    //             "dia":10,
+    //             "hora":7,
+    //             "desc":"reunion"
+    //         },
+    //         {
+    //             "mes":5,
+    //             "dia":15,
+    //             "hora":13,
+    //             "desc":"Almuerzo"
+    //         }
+    //         ]
+    //     },
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var json;
+        tempstring=String(e.target.result)
+        //se parsea.
+        // json = JSON.parse(e.target.result);
+        json = JSON.parse(tempstring);
+        console.log(json)
+        var idivendedor =""
+        var idiCliente =""
+        var idproduct=""
+        var cant=""
+        var precio=""
+        var nombre=""
+        json.ventas.forEach(function(items0) {
+            idivendedor=items0.vendedor
+            idiCliente=items0.cliente
+            items0.productos.forEach(function(items) {
+                console.log('*********************');
+                console.log('-->',items.id);
+                console.log('-->',items.cantidad);
+                console.log('-->',items.precio);
+                console.log('-->',items.nombre);
+                idproduct=items.id
+                cant=items.cantidad
+                precio=items.precio
+                nombre=items.nombre
+                //id de la Venta GENERADO AUTOMÁTICAMENTE.
+                var idiVenta= sessionStorage.getItem("idiventa")
+                if(idiVenta==null){
+                    idiVenta=0
+                }
+                idiVenta=parseInt(idiVenta)+1;
+                var add = new Ventasobj(parseInt(idiVenta), parseInt(idivendedor),parseInt(idiCliente),parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
+                sessionStorage.setItem("idiventa",idiVenta)
+                //!AGREGO CADA UNO DE LOS EVENTOS.
+                var list=sessionStorage.getItem("ventas") 
+                if(list==null){
+                    list="[]"
+                }         
+                console.log("AGREGANDO LA VENTA -----------")
+                listjson = JSON.parse(list);
+                var existevento=false
+                listjson.forEach(function(items) {
+                        if(items.idVenta==idiVenta){
+                            console.log("ya existe una Venta")
+                            existevento=true
+                        }
+                });
+                if(!existevento){
+                    console.log("insertando la venta")
+                    listjson.push(add)
+                    var jsoncreate=JSON.stringify(listjson)
+                    sessionStorage.setItem("ventas",jsoncreate)
+                    console.log(" La venta se ha ingresado correctamente")
+                }else{
+                    console.log("La venta ya existe .")
+                }
+        });
+
+    });
+    };
+    alert("Se han cargado las VENTAS Correctamente.!!")
+    reader.readAsText(file);
+    
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF Ventas ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function genReportVentas(){
+    var newBTree = CargaListasVentas();
+    var auxdotgen=newBTree.graphTable();
+    console.log(auxdotgen);
+    document.getElementById("textar").value = auxdotgen;
+}
+
+
+//*************************************************************************** */
+//!----------------------GRAFO PONDERADO DE LAS RUTAS----------------------
+class nodoGrafo{
+    constructor(data){
+        this.data=data;
+        this.siguiente=null;
+        this.anterior=null;
+        this.marca=false;
+        this.ponderation=0;
+        this.adyacentes=new listaAdyacente();
+    }
+}
+class listaAdyacente{
+    constructor(){
+        this.head=null;
+        this.end=null;
+    }
+
+    insertNodo(data){
+        var newNodo=new nodoGrafo(data);
+        newNodo.ponderation=data.val;
+        if(this.head==null){
+            this.head=newNodo;
+            this.end=newNodo;
+        }else{
+            if(this.head==this.end){
+                this.head.siguiente=newNodo;
+                newNodo.anterior=this.head;
+                this.end=newNodo;
+            }else{
+                newNodo.anterior=this.ultimo;
+                this.end.siguiente=newNodo;
+                this.end=newNodo;
+            }
+        }
+    }
+}
+class GrafoRuta{
+    constructor(){
+        this.head=null;
+        this.end=null;
+        
+        this.start=0;
+        this.end=0;
+    }
+    insertRuta(data){
+        var newNodo=new nodoGrafo(data);
+
+        if(this.head==null){
+            this.head=newNodo;
+            this.end=newNodo;
+        }else{
+            if(this.head == this.end){
+                this.head.siguiente = newNodo;
+                newNodo.anterior = this.head;
+                this.end = newNodo;
+            }else{
+                newNodo.anterior = this.end;
+                this.end.siguiente = newNodo;
+                this.end= newNodo;
+            }
+        }
+    }
+    searchNode(id){
+        var aux = this.head;
+        while(aux!=null){
+            if(aux.data.id==id){
+                return aux;
+            }else{
+                aux=aux.siguiente;
+            }
+        }
+    }
+    add_adjacent(data){
+        var principal = this.searchNode(data.id);
+        if(principal!=null){
+            principal.adyacentes.insertNodo(data);
+        }else{
+            console.log("Nodo no existe en el origen.");
+        };
+    }
+    genMatrizAdyacente(){
+        var dis=[]
+        var aux=this.head;
+        aux = this.head;
+        while(aux != null){
+            // [
+            //     ['A',   [['B', 20], ['C', 20]] ],
+            //     ['B',   [['A', 30], ['C', 100]] ],
+            //     ['C',   [['D', 10], ['A', 20]] ],
+            //     ['D',   [['C', 10], ['B', 20]] ]
+            // ]
+            var distemp=[]
+            let aux2 = aux.adyacentes.head;
+            distemp.push(String(aux.data.id))
+            var adydises=[]
+            while(aux2 != null){
+                adydises.push([String(aux2.data.idad), aux2.ponderation])
+                // cadena+= "n"+aux.data.id+" -> n"+aux2.data.idad+" [label=\""+aux2.ponderation+"km\"]; \n";
+                aux2 = aux2.siguiente;
+            }
+            distemp.push(adydises)
+            dis.push(distemp);
+            aux = aux.siguiente;
+        }
+        return dis
+    }
+    findShortPath(start, end){
+        if (start === end) {
+            var aux = this.searchNode(start);
+            aux.marca=true;
+			return this.gendot();
+		} else {
+            var aux3 = this.searchNode(start);
+            aux3.marca=true;
+			var matriz=this.genMatrizAdyacente();
+            console.log(matriz)
+            var d = new RutaOptimaDijkstra();
+            d.setGraph(matriz);
+            var path = d.getPath(start, end);
+            console.log(path)
+            console.log(typeof(path[0]))
+            var aux=this.head;
+            
+            while(aux != null){
+                
+                console.log(String(aux.data.id))
+                if(path.includes(String(aux.data.id))){
+                    aux.marca=true;
+                }
+                aux = aux.siguiente;
+            }
+            var newpath=this.gendot()
+            return newpath
+		}
+    }
+    gendot(){
+        var cadena="digraph GrafoPonderado{\n rankdir=\"LR\" \n";
+        cadena+="bgcolor=\"dodgerblue3\" "
+        cadena+= "node[shape = circle,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+        var aux=this.head;
+        while(aux != null){
+            console.log(aux.marca)
+            if(aux.marca==true){
+                cadena+="n"+aux.data.id+"[label= \""+aux.data.id+"/"+aux.data.nombre+"\" fillcolor=\"green1\"];\n"
+            }else{
+                cadena+="n"+aux.data.id+"[label= \""+aux.data.id+"/"+aux.data.nombre+"\"];\n"
+            }
+            
+            aux = aux.siguiente;
+        }
+        // graficar relaciones
+        aux = this.head;
+        while(aux != null){
+            let aux2 = aux.adyacentes.head;
+            while(aux2 != null){
+                cadena+= "n"+aux.data.id+" -> n"+aux2.data.idad+" [label=\""+aux2.ponderation+"km\"]; \n";
+                aux2 = aux2.siguiente;
+            }
+            aux = aux.siguiente;
+        }
+        cadena += "}"
+        console.log(cadena);
+        return cadena
+    }
+}
+//Función que calcula el camino optimo de las rutas realizadas por los proveedores.
+var RutaOptimaDijkstra = (function () {
+
+    var RutaOptimaDijkstra = function () {
+        this.graph = [];
+        this.queue;
+        this.distance = [];
+        this.previous = []
+    }
+
+    RutaOptimaDijkstra.prototype.setGraph = function (graph)
+    {
+        // Error check graph
+        if (typeof graph !== 'object') {
+            throw "el grafo no es un objeto (" + typeof graph + ")";
+        }
+
+        if (graph.length < 1) {
+            throw "graph is empty";
+        }
+
+        for (var index in graph) {
+            // Error revisar cada uno de los nodos
+            var node = graph[index];
+            if (typeof node !== 'object' || node.length !== 2) {
+                throw "el nodo podria ser un array que contiene 2 valores (nombre, vertices). El error está en el indice: " + index;
+            }
+
+            var nodeName = node[0];
+            var vertices = node[1];
+            this.graph[nodeName] = [];
+
+            for (var v in vertices) {
+                // Error check each node
+                var vertex = vertices[v];
+                if (typeof vertex !== 'object' || vertex.length !== 2) {
+                    throw "el nodo podria ser un array que contiene 2 valores (nombre, vertices). El error está en el indice: " + index + "[" + v + "]" ;
+                }
+                var vertexName = vertex[0];
+                var vertexCost = vertex[1];
+                this.graph[nodeName][vertexName] = vertexCost;
+            }
+        }
+    }
+
+    RutaOptimaDijkstra.prototype.getPath = function (source, target)
+    {
+        // Check source and target exist
+        if (typeof this.graph[source] === 'undefined') {
+            throw "source " + source + " no existe";
+        }
+        if (typeof this.graph[target] === 'undefined') {
+            throw "target " + target + " No existe";
+        }
+
+        if (source === target) {
+            return [];
+        }
+
+        this.queue = new MinHeap();
+        this.queue.add(source, 0);
+        this.previous[source] = null;
+
+      
+        var u = null
+        while (u = this.queue.shift()) {
+            // Reached taget!
+            if (u === target) {
+                var path = [];
+                while (this.previous[u] != null) {
+                    path.unshift(u);
+                    u = this.previous[u];
+                }
+                return path;
+            }
+
+            // all remaining vertices are inaccessible from source
+            if (this.queue.getDistance(u) == Infinity) {
+                return [];
+            }
+
+            var uDistance = this.queue.getDistance(u)
+            for (var neighbour in this.graph[u]) {
+                var nDistance = this.queue.getDistance(neighbour),
+                    aDistance = uDistance + this.graph[u][neighbour];
+
+                if (aDistance < nDistance) {
+                    this.queue.update(neighbour, aDistance);
+                    this.previous[neighbour] = u;
+                }
+            }
+        }
+
+        return [];
+    }
+
+
+
+    var MinHeap = (function() {
+        var MinHeap = function () {
+            this.min = null;
+            this.roots = [];
+            this.nodes = [];
+        }
+
+        MinHeap.prototype.shift = function()
+        {
+            var minNode = this.min;
+
+            // Current min is null or no more after it
+            if (minNode == null || this.roots.length < 1) {
+                this.min = null;
+                return minNode
+            }
+
+            // Remove it
+            this.remove(minNode);
+
+            // Consolidate
+            if (this.roots.length > 50) {
+                this.consolidate();
+            }
+
+            // Get next min
+            var lowestDistance = Infinity,
+                length = this.roots.length;
+
+            for (var i = 0; i < length; i++) {
+                var node = this.roots[i],
+                    distance = this.getDistance(node);
+
+                if (distance < lowestDistance) {
+                    lowestDistance = distance;
+                    this.min = node;
+                }
+            }
+
+            return minNode;
+        }
+
+        MinHeap.prototype.consolidate = function()
+        {
+            
+            var depths = [ [], [], [], [], [], [], [] ],
+                maxDepth = depths.length - 1, // 0-index
+                removeFromRoots = [];
+
+            var length = this.roots.length;
+            for (var i = 0; i < length; i++) {
+                var node = this.roots[i],
+                depth = this.nodes[node].depth;
+
+                if (depth < maxDepth) {
+                    depths[depth].push(node);
+                }
+            }
+
+            for (var depth = 0; depth <= maxDepth; depth++) {
+                while (depths[depth].length > 1) {
+
+                    var first = depths[depth].shift(),
+                        second = depths[depth].shift(),
+                        newDepth = depth + 1,
+                        pos = -1;
+
+                    if (this.nodes[first].distance < this.nodes[second].distance) {
+                        this.nodes[first].depth = newDepth;
+                        this.nodes[first].children.push(second);
+                        this.nodes[second].parent = first;
+
+                        if (newDepth <= maxDepth) {
+                            depths[newDepth].push(first);
+                        }
+
+                        // se busca la posición en las raices donde se obtuvieron los nodos
+                        pos = this.roots.indexOf(second);
+
+                    } else {
+                        this.nodes[second].depth = newDepth;
+                        this.nodes[second].children.push(first);
+                        this.nodes[first].parent = second;
+
+                        if (newDepth <= maxDepth) {
+                            depths[newDepth].push(second);
+                        }
+
+                        
+                        pos = this.roots.indexOf(first);
+                    }
+
+                    // eliminar las raices que son hijos
+                    if (pos > -1) {
+                        this.roots.splice(pos, 1);
+                    }
+                }
+            }
+        }
+
+        MinHeap.prototype.add = function(node, distance)
+        {
+            // se añade un nodo
+            this.nodes[node] = {
+                node: node,
+                distance: distance,
+                depth: 0,
+                parent: null,
+                children: []
+            };
+
+            // se verifica si es el minimo
+            if (!this.min || distance < this.nodes[this.min].distance) {
+                this.min = node;
+            }
+
+            // Other stuff
+            this.roots.push(node);
+        }
+
+        MinHeap.prototype.update = function(node, distance)
+        {
+            this.remove(node);
+            this.add(node, distance);
+        }
+
+        MinHeap.prototype.remove = function(node)
+        {
+            if (!this.nodes[node]) {
+                return;
+            }
+
+            // Se mueven los hijos para que sean hijos de el padre
+            var numChildren = this.nodes[node].children.length;
+            if (numChildren > 0) {
+                for (var i = 0; i < numChildren; i++) {
+                    var child = this.nodes[node].children[i];
+                    this.nodes[child].parent = this.nodes[node].parent;
+
+                    // si no hay padres se añaden las raices como hijos
+                    if (this.nodes[child].parent == null) {
+                        this.roots.push(child);
+                    }
+                }
+            }
+
+            var parent = this.nodes[node].parent;
+
+            if (parent == null) {
+                var pos = this.roots.indexOf(node);
+                if (pos > -1) {
+                    this.roots.splice(pos, 1);
+                }
+            } else {
+               
+                while (parent) {
+                    this.nodes[parent].depth--;
+                    parent = this.nodes[parent].parent
+                }
+            }
+        }
+
+        MinHeap.prototype.getDistance = function(node)
+        {
+            if (this.nodes[node]) {
+                return this.nodes[node].distance;
+            }
+            return Infinity;
+        }
+        //se retorna el minheap menor de la pila
+        return MinHeap;
+    })();
+    //se retorna el array que contiene la ruta optina generada.
+    return RutaOptimaDijkstra;
+})();
+//TODO ------------------OBJETO RUTAS-------------
+function Rutasobj(id,nombre){
+    this.id=id;
+    this.nombre=nombre;
+};
+function Adyobj(id,idad,val){
+    this.id=id;
+    this.idad=idad;
+    this.val=val;
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF RUTAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function RegistrarRutas(){
+    var idi=document.getElementById("idi").value;
+    var nombre=document.getElementById("nombre").value;
+    var idad=document.getElementById("idad").value;
+    // var nombread=document.getElementById("nombread").value;
+    var dis=document.getElementById("distancia").value;
+    
+    if( idi!=""&& nombre!=""&& idad!=""&& nombredis!=""){
+        var add1 = new Rutasobj(parseInt(idi), parseInt(nombre));
+        var add = new Adyobj(parseInt(idi), parseInt(idiad), parseInt(dis));
+        
+        var list=sessionStorage.getItem("rutas");
+        if(list==null){
+            list="[]"
+        };
+        var listad=sessionStorage.getItem("adyacentes");
+        if(listad==null){
+            listad="[]"
+        };
+        console.log("AGREGANDO UNA RUTA-----------")
+        console.log(list)
+        listjson = JSON.parse(list);
+        console.log(listjson);
+
+        listjsonad = JSON.parse(listad);
+        console.log(listjsonad);
+
+        var existeruta=false
+        listjson.forEach(function(items) {
+                if(items.id==idi){
+                    console.log("ya existe una Ruta aqui");
+                    existeruta=true
+                }
+        });
+        if(!existeruta){
+            console.log("insertando una Ruta")
+            listjson.push(add1)
+            listjsonad.push(add)
+            var jsoncreate=JSON.stringify(listjson)
+            sessionStorage.setItem("rutas",jsoncreate)
+            var jsoncreatead=JSON.stringify(listjsonad)
+            sessionStorage.setItem("adyacentes",jsoncreatead)
+            alert(" La Ruta se ha ingresado correctamente")
+        }else{
+            alert("El id de la Ruta ya existe en el sistema.")
+        }
+    }else{
+        alert("Rellene todos los campos")
+    }
+    
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ MASSIVE CHARGE OF RUTAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function cargaRutas(){
+    var input = document.getElementById('upload-json')
+    //la tipica lectura de un JSON 
+    // "rutas":[  
+    //     {  
+    //     "id":1,
+    //     "nombre"  :"bodega1"  ,
+    //     "adyacentes":[  
+    //         {  
+    //         "id":3  ,
+    //         "nombre"  :"bodega3"  ,
+    //         "distancia"  :15
+    //         }, 
+    //         {  
+    //         "id"  :  5  ,
+    //         "nombre"  :"bodega5"  ,
+    //         "distancia"  :  5
+    //         }
+    //     ]
+    //     }, 
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var json;
+        tempstring=String(e.target.result)
+        json = JSON.parse(tempstring);
+        console.log(json)
+        var idi,nombre,idiad,nombread,dis=""
+        json.rutas.forEach(function(items0) {
+            console.log('*********************');
+            console.log('-->',items0.id);
+            console.log('-->',items0.nombre);
+            idi=items0.id
+            nombre=items0.nombre
+            var add1 = new Rutasobj(parseInt(idi), nombre);
+            var list=sessionStorage.getItem("rutas");
+                if(list==null){
+                    list="[]"
+                };
+            console.log("AGREGANDO LA RUTA -----------")
+            listjson = JSON.parse(list);
+            console.log(listjson)
+            var existeruta=false
+            listjson.forEach(function(items2) {
+                console.log(items2.id, "se compara con ", idi)
+                    if(items2.id==idi){
+                        console.log("ya existe una Ruta aqui");
+                        existeruta=true
+                    }
+            });
+            if(!existeruta){
+                console.log("insertando una Ruta")
+                listjson.push(add1)                
+                var jsoncreate=JSON.stringify(listjson)
+                sessionStorage.setItem("rutas",jsoncreate)                
+                console.log(" La Ruta se ha ingresado correctamente")
+
+                items0.adyacentes.forEach(function(items) {
+                    console.log('-->',items.id);
+                    console.log('-->',items.nombre);
+                    console.log('-->',items.distancia);
+                    idiad=items.id
+                    dis=items.distancia
+                    
+                    var add = new Adyobj(parseInt(idi), parseInt(idiad), parseInt(dis));
+                    
+                    var listad=sessionStorage.getItem("adyacentes");
+                    if(listad==null){
+                        listad="[]"
+                    };
+                    console.log("AGREGANDO ADYACENTE -----------")
+                    
+                    listjsonad = JSON.parse(listad);
+                    
+                    console.log(listjsonad)
+                    var existeruta=false
+                    
+                    if(!existeruta){
+                        console.log("insertando una Adyacente")
+                        
+                        listjsonad.push(add)
+                        
+                        var jsoncreatead=JSON.stringify(listjsonad)
+                        sessionStorage.setItem("adyacentes",jsoncreatead)
+                        console.log(" La adyacente se ha ingresado correctamente")
+                    }
+            });
+
+
+            }else{
+                console.log("El id de la Ruta ya existe en el sistema.")
+            }
+
+
+
+
+
+
+            
+
+    });
+    };
+    alert("Se han cargado las VENTAS Correctamente.!!")
+    reader.readAsText(file);
+    
+};
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF RUTAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function genReportRutas(){
+    var newGrafo = CargaListasRutas();
+    
+    var auxdotgen=newGrafo.gendot();
+    
+    console.log(auxdotgen);
+    
+    document.getElementById("textar").value = auxdotgen;
+
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF RUTAS MÍNIMAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function genReportRutaOptima(){
+    var start=document.getElementById("start").value;
+    var end=document.getElementById("end").value;
+    var newGrafo = CargaListasRutas();
+    var auxdotgen=newGrafo.findShortPath(String(start),String(end));
+    console.log(auxdotgen);
+    document.getElementById("textar").value = auxdotgen;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // var list=[]
 // var jsoncreate=JSON.stringify(list)
 // sessionStorage.setItem("sales",jsoncreate)
@@ -2429,7 +4178,7 @@ function genReportCalendar2(){
 
 //*************************************************************************** */
 //!---------------------------El famosisimo LOGIN -----------------------------
-
+ 
 function login() {
     var usuarioingresado = document.querySelector("#user").value;
     var contrasenaingresada = document.querySelector("#contra").value;
@@ -2478,6 +4227,7 @@ function CargaListas(){
     var list=sessionStorage.getItem("sales")
     var list2=sessionStorage.getItem("clients")
     var list3=sessionStorage.getItem("events")
+    
     //instancio mi arbol
     var vendedornew = new AVL_vend();
     //!cargo mis vendedores  ---> Vendedoresobj(id, username, name, edad, mail, pass)
@@ -2496,6 +4246,7 @@ function CargaListas(){
     if(list3==null){
         list3="[]"
     }
+    
     json = JSON.parse(list);
     console.log(json)
     var idi,username,nombre,edad,mail,pass= ""
@@ -2573,29 +4324,129 @@ function CargaListas(){
         });
     // vendedornew.gendot_Calendar(2,)
     console.log(vendedornew)
-    return vendedornew;
-}
 
+   
+}
+function CargaListasProducts(){
+     //!cargo mis Productos --> Productosobj(id,  name, price, cant)
+    var productnew = new myTreeB();
+    var list4=sessionStorage.getItem("products")
+    if(list4==null){
+        list4="[]"
+    }
+    json4 = JSON.parse(list4);
+    console.log(json4)
+    var idi,name1,price1,cant1= ""
+    json4.forEach(function(items) {
+        console.log('*********************');
+        console.log('-->',items.id);
+        console.log('-->',items.name);
+        console.log('-->',items.price);
+        console.log('-->',items.cant);
+        idi=items.id;
+        name1=items.name;
+        price1=items.price;
+        cant1=items.cant;
+        var add = new Productosobj(parseInt(idi),name1,price1,cant1);
+        productnew.insertB(add);
+        });
+    console.log(productnew);
+    return productnew;
+}
+function CargaListasVentas(){
+    //!cargo mis Productos --> Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
+    var ventanew = new HashTable();
+    var list4=sessionStorage.getItem("ventas")
+    if(list4==null){
+        list4="[]"
+    }
+    json4 = JSON.parse(list4);
+    console.log(json4)
+    var idVenta,idVendedor,idCliente,idproduct,cant,nombre,precio= "";
+    json4.forEach(function(items) {
+        console.log('*********************');
+        console.log('-->',items.idVenta);
+        console.log('-->',items.idVendedor);
+        console.log('-->',items.idCliente);
+        console.log('-->',items.idproduct);
+        console.log('-->',items.cantidad);
+        console.log('-->',items.nombre);
+        console.log('-->',items.precio);
+        idVenta=items.idVenta;
+        idVendedor=items.idVendedor;
+        idCliente=items.idCliente;
+        idproduct=items.idproduct;
+        nombre=items.idproduct;
+        precio=items.idproduct;
+        cant=items.cantidad;
+        var add = new Ventasobj(parseInt(idVenta), parseInt(idVendedor),parseInt(idCliente),parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
+        ventanew.insert(new nodoHash(add));
+        });
+    console.log(ventanew);
+    return ventanew;
+}
 function onloadName(){
-    var myname=sessionStorage.getItem("namecurrent")
+    var myname=sessionStorage.getItem("namecurrent");
     document.getElementById("prin").innerHTML = myname;
     document.getElementById("parrafo").innerHTML = myname;
     var txt="Bienvenido "+myname+" (Vendedor)"
     document.getElementById("tituo").innerHTML = txt;
+}
+function CargaListasRutas(){
+    //!cargo mis Rutas --> Adyobj(id,idad,val)
+    //!                    Rutasobj(id,nombre)
+    var Grafo = new GrafoRuta();
+    var list=sessionStorage.getItem("rutas")
+    var listad=sessionStorage.getItem("adyacentes")
+    if(list==null){
+        list="[]"
+    }
+    if(listad==null){
+        listad="[]"
+    }
+    json = JSON.parse(list);
+    jsonad = JSON.parse(listad);
+    console.log(json)
+    var id, nombre, idi,idad,val= "";
+    json.forEach(function(items) {
+        console.log('*********************');
+        console.log('-->',items.id);
+        console.log('-->',items.nombre);
+        id=items.id;
+        nombre=items.nombre;
+        var add1 = new Rutasobj(parseInt(id), nombre);
+        // grafo_prueba.insertRuta(r1);
+        Grafo.insertRuta(add1);
+        });
+    
+    jsonad.forEach(function(items2) {
+        console.log('*********************');
+        console.log('-->',items2.id);
+        console.log('-->',items2.idad);
+        console.log('-->',items2.val);
+        idi=items2.id;
+        idad=items2.idad;
+        val=items2.val;
+        var add2 = new Adyobj(parseInt(idi), parseInt(idad), parseInt(val));
+        // grafo_prueba.add_adjacent(a2);
+        Grafo.add_adjacent(add2);
+        });
+    console.log(Grafo);
+    return Grafo;
 }
 // borrarSesion()
 
 // function Copytext() {
 //     /* Get the text field */
 //     var copyText = document.getElementById("textar").value;
-  
+
 //     /* Select the text field */
 //     copyText.select();
 //     copyText.setSelectionRange(0, 99999); /* For mobile devices */
-  
+
 //     /* Copy the text inside the text field */
 //     navigator.clipboard.writeText(copyText.value);
-    
+
 //     /* Alert the copied text */
 //     alert("Copied the text: " + copyText.value);
 //   }

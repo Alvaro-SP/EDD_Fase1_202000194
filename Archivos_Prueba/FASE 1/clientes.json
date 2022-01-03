@@ -1,0 +1,207 @@
+{
+    "vendedores": [{
+            "id": 1,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_1",
+                    "correo": "cliente1_1gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_1",
+                    "correo": "cliente2_1gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_1",
+                    "correo": "cliente3_1gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_1",
+                    "correo": "cliente4_1gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_1",
+                    "correo": "cliente5_1gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_2",
+                    "correo": "cliente1_2gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_2",
+                    "correo": "cliente2_2gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_2",
+                    "correo": "cliente3_2gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_2",
+                    "correo": "cliente4_2gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_2",
+                    "correo": "cliente5_2gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_3",
+                    "correo": "cliente1_3gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_3",
+                    "correo": "cliente2_3gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_3",
+                    "correo": "cliente3_3gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_3",
+                    "correo": "cliente4_3gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_3",
+                    "correo": "cliente5_3gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_4",
+                    "correo": "cliente1_4gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_4",
+                    "correo": "cliente2_4gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_4",
+                    "correo": "cliente3_4gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_4",
+                    "correo": "cliente4_4gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_4",
+                    "correo": "cliente5_4gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_5",
+                    "correo": "cliente1_5gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_5",
+                    "correo": "cliente2_5gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_5",
+                    "correo": "cliente3_5gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_5",
+                    "correo": "cliente4_5gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_5",
+                    "correo": "cliente5_5gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_7",
+                    "correo": "cliente1_7gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_7",
+                    "correo": "cliente2_7gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_7",
+                    "correo": "cliente3_7gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_7",
+                    "correo": "cliente4_7gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_7",
+                    "correo": "cliente5_7gmail.com"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "clientes": [{
+                    "id": 1,
+                    "nombre": "cliente1_6",
+                    "correo": "cliente1_6gmail.com"
+                },
+                {
+                    "id": 2,
+                    "nombre": "cliente2_6",
+                    "correo": "cliente2_6gmail.com"
+                },
+                {
+                    "id": 3,
+                    "nombre": "cliente3_6",
+                    "correo": "cliente3_6gmail.com"
+                },
+                {
+                    "id": 4,
+                    "nombre": "cliente4_6",
+                    "correo": "cliente4_6gmail.com"
+                },
+                {
+                    "id": 5,
+                    "nombre": "cliente5_6",
+                    "correo": "cliente5_6gmail.com"
+                }
+            ]
+        }
+
+    ]
+}

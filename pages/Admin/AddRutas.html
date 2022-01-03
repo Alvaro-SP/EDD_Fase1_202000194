@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Carga de Clientes</title>
+    <title>Agregar una Ruta</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -22,7 +22,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body>
+  <body onload="CargaListas()">
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -118,12 +118,13 @@
             </a>
             <div class="collapse" id="ui-basic2">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="AddProveedor.html">Agregar</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="DeleteProveedor.html">Eliminar</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="AddProveedor.html">Agregar</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="DeleteProveedor.html">Eliminar</a></li>
                   <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
                 </ul>
               </div>
           </li>
+
           <!-- ! inicio FASE 2 -->
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic">
@@ -176,6 +177,30 @@
             </div>
           </li>
           <!-- !FIN FASE 2 -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/tables/basic-table.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/charts/chartjs.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Reportes</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/icons/mdi.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-contacts"></i>
+              </span>
+              <span class="menu-title">Carga Masiva</span>
+            </a>
+          </li> -->
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
@@ -228,7 +253,14 @@
               </ul>
             </div>
           </li>
-          
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li> -->
         </ul>
       </nav>
       <!-- partial -->
@@ -406,32 +438,67 @@
               <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">Carga Masiva de Clientes</h3>
-                    <img src="../../assets/images/client.png" width="300" height="300" alt="admin">                    
+                    <h3 class="card-title">Administración de Rutas</h3>
+                    <img src="../../assets/images/ruta.png" width="300" height="300" alt="admin">
                   </div>
                 </div>
               </div>
               <div class="col-md-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Seleccione el archivo JSON</h4>
-                    <p class="card-description"> Solo Archivo JSON permitido. </p>
+                    <h4 class="card-title">Agregar una nueva Ruta</h4>
+                    <p class="card-description"> Datos a Ingresar. </p>
                     <form class="forms-sample">
                       <div class="form-group row">
-                        <label for="idi" class="col-sm-3 col-form-label">File:</label>
-                        
-                        <div class="btn btn-success">
-                                <p class="texto">CARGA DE CLIENTES</p>
-                                <input id="upload-json" type="file" class="btn_enviar" accept=".json">
+                        <label for="idi" class="col-sm-3 col-form-label">Id de la ruta :</label>
+                        <div class="col-sm-9">
+                          <input type="number" class="form-control" id="id" placeholder="ID ej. 3">
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label for="username" class="col-sm-3 col-form-label">Nombre de la ruta:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="nombre" placeholder="nombre de la ruta">
+                        </div>
+                      </div>
+                      
+                     
+
+                      <h5 class="card-title">Adyacente</h5>
+                      <p class="card-description"> Ingresar Adyacente. </p>
+                      <div class="form-group row">
+                        <label for="nombre" class="col-sm-3 col-form-label">Id:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="idad" placeholder="Id de Nodo adyacente">
+                        </div>
+                      </div>
+                      
+                      
+                      <!-- <div class="form-group row">
+                        <label for="correo" class="col-sm-3 col-form-label">Can</label>
+                        <div class="col-sm-9">
+                          <input type="email" class="form-control" id="correo" placeholder="Email ej. socop2412@gmail.com">
+                        </div>
+                      </div> -->
+                      
+                      <div class="form-group row">
+                        <label for="contra" class="col-sm-3 col-form-label">Distancia:</label>
+                        <div class="col-sm-9">
+                          <input type="number" class="form-control" id="distancia" placeholder="Distancia de la ruta">
+                        </div>
+                      </div>
+                      
+                      <div class="form-check form-check-flat form-check-primary">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input"> Remember me </label>
+                      </div>
+                      
                     </form>
-                    <button onclick="cargaClientes()" type="submit" class="btn btn-primary mr-2">Submit</button>
-                      <button class="btn btn-dark">Cancel</button>
+                    <button onclick="RegistrarRutas()" type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-dark">Cancel</button>
                   </div>
                 </div>
               </div>
-              
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -468,7 +535,6 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-    <script src="cargaJSON.js"></script>
     <script src="../../circular-json.js"></script>
     <script src="../../ProgramLogic/main.js"></script>
     

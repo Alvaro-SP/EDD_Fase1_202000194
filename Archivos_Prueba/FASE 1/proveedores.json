@@ -1,0 +1,156 @@
+{
+    "proveedores": [{
+            "id": 25,
+            "nombre": "COCA_COLA",
+            "direccion": "zona 2",
+            "telefono": 123456789,
+            "correo": "cocacola@gmail.com"
+        },
+        {
+            "id": 10,
+            "nombre": "FIFA",
+            "direccion": "zona 10",
+            "telefono": 332255669,
+            "correo": "fifagt@gmail.com"
+        },
+        {
+            "id": 35,
+            "nombre": "HUAWEI",
+            "direccion": "zona 21",
+            "telefono": 123789456,
+            "correo": "huawei@gmail.com"
+        },
+        {
+            "id": 5,
+            "nombre": "XIAOMI",
+            "direccion": "zona 12",
+            "telefono": 556644789,
+            "correo": "xiaomi@gmail.com"
+        },
+        {
+            "id": 18,
+            "nombre": "LENOVO",
+            "direccion": "zona 12",
+            "telefono": 556324789,
+            "correo": "lenovo@gmail.com"
+        },
+        {
+            "id": 29,
+            "nombre": "MCDONALDS",
+            "direccion": "zona 1",
+            "telefono": 556643089,
+            "correo": "mcdonalds@gmail.com"
+        },
+        {
+            "id": 39,
+            "nombre": "PEPSI",
+            "direccion": "zona 3",
+            "telefono": 556676369,
+            "correo": "pepsi@gmail.com"
+        },
+        {
+            "id": 6,
+            "nombre": "INTEL",
+            "direccion": "zona 9",
+            "telefono": 556644999,
+            "correo": "intel@gmail.com"
+        },
+        {
+            "id": 22,
+            "nombre": "BMW",
+            "direccion": "zona 5",
+            "telefono": 666644789,
+            "correo": "bmw@gmail.com"
+        },
+        {
+            "id": 32,
+            "nombre": "AVON",
+            "direccion": "zona 7",
+            "telefono": 55632569,
+            "correo": "avon@gmail.com"
+        },
+        {
+            "id": 41,
+            "nombre": "LEVIS",
+            "direccion": "zona 20",
+            "telefono": 556235719,
+            "correo": "levis@gmail.com"
+        },{
+            "id": 36,
+            "nombre": "COCA_COLA_2",
+            "direccion": "zona 2",
+            "telefono": 123456789,
+            "correo": "cocacola@gmail.com"
+        },
+        {
+            "id": 101,
+            "nombre": "FIFA_2",
+            "direccion": "zona 10",
+            "telefono": 332255669,
+            "correo": "fifagt@gmail.com"
+        },
+        {
+            "id": 53,
+            "nombre": "HUAWEI_2",
+            "direccion": "zona 21",
+            "telefono": 123789456,
+            "correo": "huawei@gmail.com"
+        },
+        {
+            "id": 115,
+            "nombre": "XIAOMI_2",
+            "direccion": "zona 12",
+            "telefono": 556644789,
+            "correo": "xiaomi@gmail.com"
+        },
+        {
+            "id": 81,
+            "nombre": "LENOVO_2",
+            "direccion": "zona 12",
+            "telefono": 556324789,
+            "correo": "lenovo@gmail.com"
+        },
+        {
+            "id": 9,
+            "nombre": "MCDONALDS_2",
+            "direccion": "zona 1",
+            "telefono": 556643089,
+            "correo": "mcdonalds@gmail.com"
+        },
+        {
+            "id": 3,
+            "nombre": "PEPSI_2",
+            "direccion": "zona 3",
+            "telefono": 556676369,
+            "correo": "pepsi@gmail.com"
+        },
+        {
+            "id": 7,
+            "nombre": "INTEL_2",
+            "direccion": "zona 9",
+            "telefono": 556644999,
+            "correo": "intel@gmail.com"
+        },
+        {
+            "id": 2,
+            "nombre": "BMW_2",
+            "direccion": "zona 5",
+            "telefono": 666644789,
+            "correo": "bmw@gmail.com"
+        },
+        {
+            "id": 42,
+            "nombre": "AVON_2",
+            "direccion": "zona 7",
+            "telefono": 55632569,
+            "correo": "avon@gmail.com"
+        },
+        {
+            "id": 14,
+            "nombre": "LEVIS_2",
+            "direccion": "zona 20",
+            "telefono": 556235719,
+            "correo": "levis@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+    "ventas":[
+        {
+            "vendedor":1,
+            "cliente":2,
+            "productos":[
+                {"id":1,
+                "precio":100,
+                "nombre":"producto 1",
+                "cantidad":3
+            },
+                {
+                "id":5,
+                "precio":100,
+                "nombre":"producto 5",
+                "cantidad":1
+                }
+            ]
+        },
+
+        {
+            "vendedor":1,
+            "cliente":1,
+            "productos":[
+                {"id":2,
+                    "precio":100,
+                "nombre":"producto 2",
+                "cantidad":1},
+                {
+                "id":3,
+                "precio":100,
+                "nombre":"producto 3",
+                "cantidad":2
+                }
+            ]
+        },
+
+        {
+            "vendedor":2,
+            "cliente":1,
+            "productos":[
+                {"id":1,
+                    "precio":100,
+                "nombre":"producto 1",
+                "cantidad":6},
+                {
+                "id":4,
+                "precio":100,
+                "nombre":"producto 4",
+                "cantidad":3
+                }
+            ]
+        },
+        {
+            "vendedor":3,
+            "cliente":2,
+            "productos":[
+                {"id":1,
+                    "precio":100,
+                "nombre":"producto 1",
+                "cantidad":6},
+                {
+                "id":10,
+                "precio":100,
+                "nombre":"producto 10",
+                "cantidad":2
+                }
+            ]
+        }
+    ]
+}

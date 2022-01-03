@@ -1,0 +1,115 @@
+{
+    "vendedores": [{
+            "id": 1,
+            "nombre": "juan",
+            "edad": 25,
+            "correo": "juan@gmail.com",
+            "password": "juan1",
+            "username":"juanito"
+        },
+        {
+            "id": 5,
+            "nombre": "pedro",
+            "edad": 30,
+            "correo": "pedro@gmail.com",
+            "password": "pedrojr",
+            "username":"pedro"
+        },
+        {
+            "id": 3,
+            "nombre": "estuardo",
+            "edad": 22,
+            "correo": "estuardo@gmail.com",
+            "password": "estuardito",
+            "username":"estuardito"
+        },
+        {
+            "id": 2,
+            "nombre": "javier",
+            "edad": 27,
+            "correo": "javier@gmail.com",
+            "password": "javiii",
+            "username":"ja_vi"
+        },
+        {
+            "id": 4,
+            "nombre": "miguel",
+            "edad": 20,
+            "correo": "mieguel@gmail.com",
+            "password": "miguelito",
+            "username":"callmemige"
+        },
+        {
+            "id": 10,
+            "nombre": "luisa",
+            "edad": 33,
+            "correo": "luisa@gmail.com",
+            "password": "luisa777",
+            "username":"luisaaa"
+        },
+        {
+            "id": 7,
+            "nombre": "vegeta",
+            "edad": 27,
+            "correo": "vegeta777@gmail.com",
+            "password": "vegeta777",
+            "username":"vegetita"
+        },
+        {
+            "id": 9,
+            "nombre": "amilcar",
+            "edad": 47,
+            "correo": "amilcar@gmail.com",
+            "password": "amil1234",
+            "username":"donAmilcar"
+        },
+        {
+            "id": 8,
+            "nombre": "rabis",
+            "edad": 47,
+            "correo": "rabiscorp@gmail.com",
+            "password": "criaturita",
+            "username":"rubenDoblas"
+        },
+        {
+            "id": 6,
+            "nombre": "oscar",
+            "edad": 22,
+            "correo": "oscar@gmail.com",
+            "password": "1234",
+            "username":"ojcar"
+        },
+        {
+            "id": 11,
+            "nombre": "luis migel",
+            "edad": 22,
+            "correo": "luis@gmail.com",
+            "password": "1234",
+            "username":"papiLuismi"
+        },
+        {
+            "id": 15,
+            "nombre": "juan gabriel",
+            "edad": 36,
+            "correo": "gabriel@gmail.com",
+            "password": "1234",
+            "username":"elDivo"
+        },
+        {
+            "id": 13,
+            "nombre": "angel",
+            "edad": 23,
+            "correo": "angel@gmail.com",
+            "password": "1234",
+            "username":"angelito"
+        },
+        {
+            "id": 20,
+            "nombre": "martin",
+            "edad": 23,
+            "correo": "martin@gmail.com",
+            "password": "1234",
+            "username":"sanMartin"
+        }
+    ]
+}

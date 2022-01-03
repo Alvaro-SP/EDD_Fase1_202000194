@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Carga de Clientes</title>
+    <title>Carga de Rutas</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -176,6 +176,30 @@
             </div>
           </li>
           <!-- !FIN FASE 2 -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/tables/basic-table.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+              <span class="menu-title">Calendario</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/charts/chartjs.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Reportes</span>
+            </a>
+          </li> -->
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="pages/icons/mdi.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-contacts"></i>
+              </span>
+              <span class="menu-title">Carga Masiva</span>
+            </a>
+          </li> -->
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">
@@ -228,7 +252,14 @@
               </ul>
             </div>
           </li>
-          
+          <!-- <li class="nav-item menu-items">
+            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li> -->
         </ul>
       </nav>
       <!-- partial -->
@@ -406,8 +437,8 @@
               <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">Carga Masiva de Clientes</h3>
-                    <img src="../../assets/images/client.png" width="300" height="300" alt="admin">                    
+                    <h3 class="card-title">Carga Masiva de Rutas</h3>
+                    <img src="../../assets/images/ruta.png" width="300" height="200" alt="admin">                    
                   </div>
                 </div>
               </div>
@@ -421,12 +452,51 @@
                         <label for="idi" class="col-sm-3 col-form-label">File:</label>
                         
                         <div class="btn btn-success">
-                                <p class="texto">CARGA DE CLIENTES</p>
+                                <p class="texto">CARGA DE RUTAS</p>
                                 <input id="upload-json" type="file" class="btn_enviar" accept=".json">
                         </div>
+                        
                       </div>
+                      <!-- <div class="form-group row">
+                        <label for="username" class="col-sm-3 col-form-label">Username:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="username" placeholder="Username">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group row">
+                        <label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="nombre" placeholder="Nombre ej. Alvaro">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="edad" class="col-sm-3 col-form-label">Edad:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="edad" placeholder="Edad ej. 18">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="correo" class="col-sm-3 col-form-label">Correo</label>
+                        <div class="col-sm-9">
+                          <input type="email" class="form-control" id="correo" placeholder="Email ej. socop2412@gmail.com">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group row">
+                        <label for="contra" class="col-sm-3 col-form-label">Contrasena:</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="contra" placeholder="Password">
+                        </div>
+                      </div>
+                      
+                      <div class="form-check form-check-flat form-check-primary">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input"> Remember me </label>
+                      </div> -->
+                      
                     </form>
-                    <button onclick="cargaClientes()" type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button onclick="cargaRutas()" type="submit" class="btn btn-primary mr-2">Submit</button>
                       <button class="btn btn-dark">Cancel</button>
                   </div>
                 </div>
@@ -471,6 +541,7 @@
     <script src="cargaJSON.js"></script>
     <script src="../../circular-json.js"></script>
     <script src="../../ProgramLogic/main.js"></script>
+    <!-- <script src="../../ProgramLogic/main.js"></script> -->
     
   </body>
 </html>
