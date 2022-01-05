@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Agregar una Venta</title>
+    <title>Configuración</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -53,7 +53,7 @@
                     </div>
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                    <p class="preview-subject ellipsis mb-1 text-small" href="Configuracion.html">Account settings</p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
@@ -438,63 +438,41 @@
               <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">Administración de Ventas</h3>
-                    <img src="../../assets/images/venta.png" width="300" height="300" alt="admin">                    
+                    <h3 class="card-title">Configuracion</h3>
+                    <img src="../../assets/images/conf.png" width="300" height="300" alt="admin">
                   </div>
                 </div>
               </div>
               <div class="col-md-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Agregar una nueva Venta</h4>
-                    <p class="card-description"> Datos a Ingresar para el registro. </p>
+                    <h4 class="card-title">CONFIGURAR EL TIEMPO DE BLOCKCHAIN</h4>
+                    <p class="card-description"> Datos a Ingresar. </p>
                     <form class="forms-sample">
                       <div class="form-group row">
-                        <label for="idi" class="col-sm-3 col-form-label">Id del Vendedor :</label>
+                        <label for="idi" class="col-sm-3 col-form-label">MINUTOS :</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="vendedor" placeholder="ID ej. 3">
+                          <input type="number" class="form-control" id="minutos" placeholder="ej 5 minutos">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="idi" class="col-sm-3 col-form-label">Nombre del Vendedor :</label>
+                        <label for="username" class="col-sm-3 col-form-label">SEGUNDOS:</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="nombrevendedor" placeholder="nombre ej Carlos">
+                          <input type="text" class="form-control" id="segundos" placeholder="ej 30 segundos">
                         </div>
                       </div>
-                      <!-- <div class="form-group row">
-                        <label for="username" class="col-sm-3 col-form-label">Username:</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="username" placeholder="Username">
-                        </div>
-                      </div> -->
                       
-                      <div class="form-group row">
-                        <label for="nombre" class="col-sm-3 col-form-label">Nombre del Cliente:</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="cliente" placeholder="nombre, ej Alvaro">
-                        </div>
-                      </div>
+                     
 
-                      <h5 class="card-title">Productos</h5>
-                      <p class="card-description"> Ingresar los productos. </p>
+                      <h4 class="card-title">CONFIGURAR EL VALOR DE CEROS</h4>
+                      <p class="card-description"> Ingresar entero. </p>
                       <div class="form-group row">
-                        <label for="nombre" class="col-sm-3 col-form-label">Id:</label>
+                        <label for="nombre" class="col-sm-3 col-form-label">NUMEROS DE CEROS DE PRUEBA DE TRABAJO:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="id" placeholder="Id del producto">
+                          <input type="text" class="form-control" id="ceros" placeholder="ej 2">
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="nombre" class="col-sm-3 col-form-label">Precio:</label>
-                        <div class="col-sm-9">
-                          <input type="number" class="form-control" id="precio" placeholder="Precio del producto">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto">
-                        </div>
-                      </div>
+                      
                       
                       <!-- <div class="form-group row">
                         <label for="correo" class="col-sm-3 col-form-label">Can</label>
@@ -503,12 +481,12 @@
                         </div>
                       </div> -->
                       
-                      <div class="form-group row">
-                        <label for="contra" class="col-sm-3 col-form-label">Cantidad:</label>
+                      <!-- <div class="form-group row">
+                        <label for="contra" class="col-sm-3 col-form-label">Distancia:</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="cantidad" placeholder="Cantidad de producto">
+                          <input type="number" class="form-control" id="distancia" placeholder="Distancia de la ruta">
                         </div>
-                      </div>
+                      </div> -->
                       
                       <div class="form-check form-check-flat form-check-primary">
                         <label class="form-check-label">
@@ -516,7 +494,7 @@
                       </div>
                       
                     </form>
-                    <button onclick="RegistrarVentas()" type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button onclick="Configurar()" type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark">Cancel</button>
                   </div>
                 </div>

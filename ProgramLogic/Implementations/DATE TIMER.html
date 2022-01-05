@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 class="text-center" id="count-down-timer"></h1>
+    <div id="clock"></div>
+    <script>
+        const getRemainingTime = deadline => {
+            let now = new Date(),
+                remainTime = (new Date(deadline) - now + 1000) / 1000,
+                remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),
+                remainMinutes = ('0' + Math.floor(remainTime / 60 % 60)).slice(-2),
+                remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
+                remainDays = Math.floor(remainTime / (3600 * 24));
+
+            return {
+                remainSeconds,
+                remainMinutes,
+                remainHours,
+                remainDays,
+                remainTime
+            }
+        };
+
+        const countdown = (deadline, elem, finalMessage) => {
+            const el = document.getElementById(elem);
+
+            const timerUpdate = setInterval(() => {
+                let t = getRemainingTime(deadline);
+                el.innerHTML = `${t.remainDays}d:${t.remainHours}h:${t.remainMinutes}m:${t.remainSeconds}s`;
+
+                if (t.remainTime <= 1) {
+                    clearInterval(timerUpdate);
+                    el.innerHTML = finalMessage;
+                }
+
+            }, 1000)
+        };
+        var mydate = new Date()
+        var datemin = mydate - 300000
+        console.log((datemin))
+        console.log(mydate)
+        var exactdate = new Date(datemin)
+        console.log(exactdate)
+        var date = exactdate.toString()
+        console.log(exactdate.toString())
+        console.log(datemin.toString())
+
+        var txt = date.replace("(hora estándar central)", "")
+        txt = txt.slice(4)
+        console.log(txt)
+        countdown(txt, 'clock', '¡Ya empezó!');
+        // 'Dec 31 2025 21:34:40 GMT-0500', 'clock', '¡Ya empezó!'
+    </script>
+    <script>
+        
+        function paddedFormat(num) {
+            return num < 10 ? "0" + num : num;
+        }
+
+        function startCountDown(duration, element) {
+
+            let secondsRemaining = duration;
+            let min = 0;
+            let sec = 0;
+
+            let countInterval = setInterval(function () {
+
+                min = parseInt(secondsRemaining / 60);
+                sec = parseInt(secondsRemaining % 60);
+
+                element.textContent = `${paddedFormat(min)}:${paddedFormat(sec)}`;
+
+                secondsRemaining = secondsRemaining - 1;
+                if (secondsRemaining < 0) { 
+                    clearInterval(countInterval)
+                    alert("se ha creado el BLOCKCHAIN");
+                    sessionStorage.setItem("mins",5)
+                    sessionStorage.setItem("sec",0)
+                };
+
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var mins=sessionStorage.getItem("mins");
+            var seconds=sessionStorage.getItem("sec");
+            if(mins==null){
+                mins=5;
+            }
+            if(seconds==null){
+                seconds=0;
+            }
+            let time_minutes = mins;
+            let time_seconds = seconds; 
+
+            let duration = time_minutes * 60 + time_seconds;
+
+            element = document.querySelector('#count-down-timer');
+            element.textContent = `${paddedFormat(time_minutes)}:${paddedFormat(time_seconds)}`;
+
+            startCountDown(--duration, element);
+            
+        };
+    </script>
+</body>
+
+</html>

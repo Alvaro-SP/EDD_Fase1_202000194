@@ -63,15 +63,25 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
         this.insertProductVenta(newNode)
     }
     insertProductVenta(productnew){
+        //!Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
         for(var i=0;i<this.size;i++){
-            if(this.keys[i]!=null){
-                if(this.keys[i].data.idVendedor==productnew.idVendedor && this.keys[i].data.idCliente==productnew.idCliente);
-                var productNode=this.buscarNodoProducto(productnew.idproduct)
-                console.log(productNode)
-                if (productNode!=null || productNode!=[]){
-                    this.keys[i].products.add(productNode);
-                    console.log("se ha ingresado el producto en la Venta encontrada.")
-                }
+            if(this.keys[i]){
+                console.log(this.keys[i])
+                if(this.keys[i].data.idVendedor==productnew.data.idVendedor && this.keys[i].data.idCliente==productnew.data.idCliente){
+
+                    // var productNode=this.buscarNodoProducto(productnew.idproduct)
+                    //!Productosobj(id,  name, price, cant,total)
+                    var total=parseFloat(productnew.data.precio) * parseFloat(productnew.data.cantidad)
+                    var newadd=new ProductsNewobj(productnew.data.idVenta,productnew.data.idVendedor, productnew.data.idCliente, productnew.data.idproduct,productnew.data.nombre,productnew.data.precio,productnew.data.cantidad,total)
+                    // console.log(productNode)
+                    if (this.keys[i].products){
+                        this.keys[i].products.add(newadd);
+                        console.log("se ha ingresado el producto en la Venta encontrada.");
+                    }else{
+                        console.log("no existe un producto aún")
+                    }
+                };
+                
             }else{
                 console.log("No se encontró el producto!!!");
             };

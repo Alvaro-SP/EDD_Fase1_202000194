@@ -1009,6 +1009,45 @@ class AVL_vend{
         }
     }
     //*Generación de los Dots
+    gendot_Encriptados(){
+        // let cadena="digraph arbol {\n";
+        let cadena="";
+        cadena+= this.generar_nodos2(this.head);
+        cadena+="\n";
+        cadena+=this.enlazar2(this.head);
+        
+        console.log(cadena);
+        return cadena;
+    }
+    generar_nodos2(raiz_actual){ 
+        let nodos ="";
+        let labeltemp ="";
+        if(raiz_actual != null){
+            labeltemp="[label = \" iD:"+raiz_actual.data.id+"\n User:"+btoa(raiz_actual.data.username)+"\n Nombre: "+btoa(raiz_actual.data.name)+"\n Edad: "+btoa(raiz_actual.data.edad)+"\n Mail: "+btoa(raiz_actual.data.mail)+"\n Contra: "+btoa(raiz_actual.data.pass)+"\"];\n"
+            nodos+= "n"+raiz_actual.data.id+labeltemp;
+            nodos+=this.generar_nodos2(raiz_actual.izquierda);
+            nodos+=this.generar_nodos2(raiz_actual.derecha);
+        }
+        return nodos;
+    }
+    enlazar2(raiz_actual){
+        let cadena="";
+        if(raiz_actual != null){
+            cadena += this.enlazar2(raiz_actual.izquierda);
+            cadena += this.enlazar2(raiz_actual.derecha);
+            //validaciones
+            if(raiz_actual.izquierda != null){
+                cadena+="n"+raiz_actual.data.id + "-> n"+raiz_actual.izquierda.data.id+"\n";
+                // cadena+="n"+raiz_actual.izquierda.data.id + "-> n"+raiz_actual.data.id+"\n";
+            }
+            if(raiz_actual.derecha != null){
+                cadena+="n"+raiz_actual.data.id + "-> n"+raiz_actual.derecha.data.id+"\n";
+                // cadena+="n"+raiz_actual.derecha.data.id + "-> n"+raiz_actual.data.id+"\n";
+            }
+        }
+        return cadena;
+    }
+    //* ENCRIPTADO GENERACIÓN
     gendot_Vendedores(){
         // let cadena="digraph arbol {\n";
         let cadena="";
@@ -1305,8 +1344,102 @@ function genReportVendedor(){
 
 
 }
+function genReportVendedor2(){
+    var newalv = CargaListas();
+    var dotfortext= "digraph Chart{ \n";
+    dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    var dotgen="{\n";
+    var auxdotgen=newalv.gendot_Vendedores();
+    dotgen+=auxdotgen
+    dotfortext+=auxdotgen
+    dotgen+="\n}";
+    dotfortext+="\n}";
+    console.log(dotgen)
+    
+    document.getElementById("textar").value = dotfortext;
+    //create a network
+      var container = document.getElementById("mynetwork");
+      var DOTstring = dotgen
+      
+      // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+      
+      console.log(DOTstring)
+      // console.log("Holaa esta es una prueba.")
+
+      var parsedData = vis.parseDOTNetwork(DOTstring);
+      var data = {
+          nodes: parsedData.nodes,
+          edges: parsedData.edges
+      }
+      var options = {
+          nodes: {
+              shape: 'box',
+              borderWidth: 2,                
+              color:"yellow",
+          },        
+          layout: {
+              hierarchical: {
+                  levelSeparation: 150,
+                  nodeSpacing: 170,
+                  parentCentralization: false,
+                  direction: 'UD',        // UD, DU, LR, RL
+                  sortMethod: 'directed',  // hubsize, directed
+                  shakeTowards: 'roots'  // roots, leaves                        
+              },
+          },                        
+      };
+      var network = new vis.Network(container, data, options);
+      genReportEncriptados()
 
 
+
+}
+function genReportEncriptados(){
+    var newalv = CargaListas();
+    var dotfortext= "digraph Chart{ \n";
+    dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    var dotgen="{\n";
+    var auxdotgen=newalv.gendot_Encriptados();
+    dotgen+=auxdotgen
+    dotfortext+=auxdotgen
+    dotgen+="\n}";
+    dotfortext+="\n}";
+    console.log(dotgen)
+    
+    document.getElementById("textar").value = dotfortext;
+    //create a network
+      var container = document.getElementById("mynetwork2");
+      var DOTstring = dotgen
+      
+      // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+      
+      console.log(DOTstring)
+      // console.log("Holaa esta es una prueba.")
+
+      var parsedData = vis.parseDOTNetwork(DOTstring);
+      var data = {
+          nodes: parsedData.nodes,
+          edges: parsedData.edges
+      }
+      var options = {
+          nodes: {
+              shape: 'box',
+              borderWidth: 2,                
+              color:"yellow",
+          },        
+          layout: {
+              hierarchical: {
+                  levelSeparation: 150,
+                  nodeSpacing: 170,
+                  parentCentralization: false,
+                  direction: 'UD',        // UD, DU, LR, RL
+                  sortMethod: 'directed',  // hubsize, directed
+                  shakeTowards: 'roots'  // roots, leaves                        
+              },
+          },                        
+      };
+      var network = new vis.Network(container, data, options);
+    }
 
 //*************************************************************************** */
 //!---------------------------CLIENTES LISTA DOBLE -----------------------------
@@ -3010,10 +3143,11 @@ function genReportProducto(){
 //*************************************************************************** */
 //!------------------TABLA HASH DE LAS VENTAS REALIZADAS.------------------
 //TODO ------------------OBJETO VENTAS-------------
-function Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad,precio, nombre){
+function Ventasobj(idVenta,idVendedor,nombreVendedor, nombreCliente, idproduct, cantidad,precio, nombre){
     this.idVenta=idVenta;
     this.idVendedor=idVendedor;
-    this.idCliente=idCliente;
+    this.nombreVendedor=nombreVendedor;
+    this.nombreCliente=nombreCliente;
     this.idproduct=idproduct;
     this.cantidad=cantidad;
     this.precio=precio;
@@ -3077,40 +3211,72 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
         return new_index;
     }
     insert(newNode){
-        // var newNode= new nodoHash(value)
-        var index=this.compute_hash(newNode.data.idVenta);
-        //si la posición está disponible
-        if(this.keys[index]==null){
-            this.keys[index]=newNode;
-            this.keys_used++;
+        var nodoVenta=this.buscarNodoVenta(newNode.data.idVenta)
+        if(nodoVenta){
+            this.insertProductVenta(nodoVenta,newNode);
         }else{
-            index=this.solColision(index);
-            this.keys[index]=newNode;
-            this.keys_used++;
+            // var newNode= new nodoHash(value)
+            var index=this.compute_hash(newNode.data.idVenta);
+            //si la posición está disponible
+            if(this.keys[index]==null){
+                this.keys[index]=newNode;
+                this.keys_used++;
+            }else{
+                index=this.solColision(index);
+                this.keys[index]=newNode;
+                this.keys_used++;
+            }
+            var use_percent = this.keys_used/this.size;
+            if(use_percent>=0.5){
+                this.rehashing();//aqui se hace el rehashing suponiendo que el porcentaje de la tabla excede el 50% DE SU ESPACIO LLENO
+            }
+            var nodoVenta2=this.buscarNodoVenta(newNode.data.idVenta)
+            if(nodoVenta2){
+                this.insertProductVenta(nodoVenta2,newNode);
+            }else{
+                alert(error)
+            }
         }
-        var use_percent = this.keys_used/this.size;
-        if(use_percent>=0.5){
-            this.rehashing();//aqui se hace el rehashing suponiendo que el porcentaje de la tabla excede el 50% DE SU ESPACIO LLENO
-        }
-        this.insertProductVenta(newNode)
+        
+        
+        
+        
+        
     }
-    insertProductVenta(productnew){
+    insertProductVenta(nodoVenta, productnew){
+        //!Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
+        
+        // var productNode=this.buscarNodoProducto(productnew.idproduct)
+        //!Productosobj(id,  name, price, cant,total)
+        var total=parseFloat(productnew.data.precio) * parseFloat(productnew.data.cantidad)
+        var newadd=new ProductsNewobj(productnew.data.idVenta,productnew.data.idVendedor, productnew.data.idCliente, productnew.data.idproduct,productnew.data.nombre,productnew.data.precio,productnew.data.cantidad,total)
+        
+        nodoVenta.products.add(newadd);
+        console.log("se ha ingresado el producto en la Venta encontrada.");
+        
+    };
+
+    insertProductVenta2( nodoVenta, productnew){
         //!Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
         for(var i=0;i<this.size;i++){
             if(this.keys[i]){
                 console.log(this.keys[i])
-                if(this.keys[i].data.idVendedor==productnew.data.idVendedor && this.keys[i].data.idCliente==productnew.data.idCliente);
-                // var productNode=this.buscarNodoProducto(productnew.idproduct)
-                //!Productosobj(id,  name, price, cant,total)
-                var total=parseFloat(productnew.data.precio) * parseFloat(productnew.data.cantidad)
-                var newadd=new ProductsNewobj(productnew.data.idVenta,productnew.data.idVendedor, productnew.data.idCliente, productnew.data.idproduct,productnew.data.nombre,productnew.data.precio,productnew.data.cantidad,total)
-                // console.log(productNode)
-                if (this.keys[i].products){
-                    this.keys[i].products.add(newadd);
-                    console.log("se ha ingresado el producto en la Venta encontrada.");
-                }else{
-                    console.log("no existe un producto aún")
-                }
+                // if(this.keys[i].data.idVendedor==productnew.data.idVendedor && this.keys[i].data.idCliente==productnew.data.idCliente){
+                if(this.keys[i].data.idVenta==productnew.data.idVenta){
+
+                    // var productNode=this.buscarNodoProducto(productnew.idproduct)
+                    //!Productosobj(id,  name, price, cant,total)
+                    var total=parseFloat(productnew.data.precio) * parseFloat(productnew.data.cantidad)
+                    var newadd=new ProductsNewobj(productnew.data.idVenta,productnew.data.idVendedor, productnew.data.idCliente, productnew.data.idproduct,productnew.data.nombre,productnew.data.precio,productnew.data.cantidad,total)
+                    // console.log(productNode)
+                    if (this.keys[i].products){
+                        this.keys[i].products.add(newadd);
+                        console.log("se ha ingresado el producto en la Venta encontrada.");
+                    }else{
+                        console.log("no existe un producto aún")
+                    }
+                };
+                
             }else{
                 console.log("No se encontró el producto!!!");
             };
@@ -3147,6 +3313,15 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
         }
         
     }
+    buscarNodoVenta(idVenta){
+        for(var i=0;i<this.size;i++){
+            console.log(idVenta)
+            if(this.keys[i]!=null){
+                if(this.keys[i].data.idVenta==idVenta)
+                return this.keys[i]
+            }
+        }
+    }
     buscarNodoProducto(idproduct){
         var list4=sessionStorage.getItem("products")
         if(list4==null){
@@ -3173,8 +3348,8 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
             });
         return null;
     }
-    isVendedorProduct(key){
-
+    VentasPorVendedor(idVendedor){
+        this.graphTableVENDE(idVendedor)
     }
     show(){
         for(var i=0;i<this.size;i++){
@@ -3187,18 +3362,23 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
     }
     graphTable(){
         this.graph="digraph HashTable{\n";
+        console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬comenzando a crear la tabla▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
         for(var i=0;i<this.size;i++){ 
+            
             if(this.keys[i]){
-                if(this.keys[i]){
-                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"|"+this.keys[i].data.idCliente+"/"+this.keys[i].data.idVendedor+"\"]"+this.keys[i].data.idVenta+";\n";
-                    this.graph+=  this.keys[i].products.obtainproducts(this.keys[i].data.idVenta)
-                }else{
-                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"| "+"\"]"+this.keys[i].data.idVenta+";\n";
-                }
-            }           
+                this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\" "+i+"|Venta: "+this.keys[i].data.idVenta+" Cliente: "+this.keys[i].data.nombreCliente+"/ Vendedor: "+this.keys[i].data.nombreVendedor+"\"]prin"+i+";\n";
+                // this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\" Venta: "+this.keys[i].data.idVenta+"| Cliente: "+this.keys[i].data.idCliente+"/ Vendedor: "+this.keys[i].data.idVendedor+"\"]prin"+this.keys[i].data.idVenta+";\n";
+                // this.keys[i].products.print()
+                this.graph+=  this.keys[i].products.obtainproducts(i,this.keys[i].data.idVenta,this.keys[i].data.idVendedor,this.keys[i].data.nombreCliente)
+                
+            }else{
+                // this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"| "+"\"] prin"+this.keys[i].data.idVenta+";\n";
+                this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+i+"| "+"\"] prin"+i+";\n";
+            }
+            
             
         }
-        this.graph+="\"]a;\n";
+        // this.graph+="\"]a;\n";
 
         this.enlazarVentas();
         this.graph+="}\n"
@@ -3206,13 +3386,48 @@ class HashTable{//tabla hash que contendra la transaccion de ventas
     }
     enlazarVentas(){
         for(var i=0;i<this.size;i++){
-            if(this.keys[i]){
+            // if(this.keys[i]){
             if(i==this.size-1){
-                this.graph+=this.keys[i].data.idVenta+"; "
+                this.graph+="prin"+i+";"
                 return
+            }else{
+                this.graph+="prin"+i+" -> "  
             }            
-            this.graph+=this.keys[i].data.idVenta+" -> "     
-            } 
+            
+        }
+    }
+    graphTableVENDE(idVendedor){
+        this.graph="digraph HashTable{\n";
+        console.log("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬comenzando a crear la tabla▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        for(var i=0;i<this.size;i++){ 
+            if(this.keys[i]){
+                if(this.keys[i].data.idVendedor==idVendedor){
+                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\" "+i+"|Venta: "+this.keys[i].data.idVenta+" Cliente: "+this.keys[i].data.nombreCliente+"/ Vendedor: "+this.keys[i].data.nombreVendedor+"\"]prin"+i+";\n";
+                    this.graph+=  this.keys[i].products.obtainproducts(i,this.keys[i].data.idVenta,this.keys[i].data.idVendedor,this.keys[i].data.nombreCliente)
+                }else{
+                    this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+i+"| "+"\"] prin"+i+";\n";
+                }
+            }else{
+                // this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+this.keys[i].data.idVenta+"| "+"\"] prin"+this.keys[i].data.idVenta+";\n";
+                this.graph+="node[shape = record,fillcolor=\"yellow\" color=\"black\" style=\"filled\" label=\""+i+"| "+"\"] prin"+i+";\n";
+            }
+        }
+        // this.graph+="\"]a;\n";
+
+        this.enlazarVentasVENDE();
+        this.graph+="}\n"
+        return this.graph
+    }
+    enlazarVentasVENDE(){
+        for(var i=0;i<this.size;i++){
+            // if(this.keys[i]){
+            if(i==this.size-1){
+                this.graph+="prin"+i+";"
+                return
+            }else{
+                this.graph+="prin"+i+" -> "  
+            }            
+            
         }
     }
 }
@@ -3347,37 +3562,107 @@ class LD_product{
         return dot
 
     }
-    obtainproducts(actualid){
+    obtainproducts(actualid,idVenta,idVendedor, idCliente){
         let current = this.head;
-        if(!this.size){
-            return null
-        };
-        var current2=this.head
-        var tempstring=""
+        var current2=this.head;
+        var tempstring="";
         let cadena="";
         var ranksame=""
-        ranksame+="rank=same {"+actualid;
-        console.log(current)
+
+        if(!this.size){
+            return ""
+        };
+        
+        ranksame+="rank=same { prin"+actualid;
         while(current){
-            cadena+="node[shape = record,fillcolor=\"skyblue\" color=\"black\" style=\"filled\" label=\""+current.data.id+"/"+current.data.name+"/"+current.data.price+"\"]"+"n"+current.data.id+"oo"+current.data.name+current.data.price+";\n";
+            // if(idVenta==current.data.idVenta){
+                
+            
+                cadena+="node[shape = record,fillcolor=\"skyblue\" color=\"black\" style=\"filled\" label=\""+current.data.idproduct+"/"+current.data.nombre+"/ total:"+current.data.total+"\"]a"+actualid+"n"+current.data.idproduct+";\n";
+            
+            // }
             current=current.next;
         };
+
+        cadena+="prin"+actualid+" -> a"+actualid+"n"+current2.data.idproduct+";\n";
         while(current2.next){
-            cadena+="n"+current2.data.id+"oo"+current2.data.name+current2.data.price+"->"+"n"+current2.next.data.id+"oo"+current2.next.data.name+current2.next.data.price+";\n"
-            ranksame+=" ; "+"n"+current2.data.id+"oo"+current2.data.name+current2.data.price
+            // if(current2.data.idVenta==actualid){
+                // if(idVendedor==current2.next.data.idVendedor && idCliente==current2.next.data.idCliente){
+                if("a"+actualid+"n"+current2.data.idproduct !="a"+actualid+"n"+current2.next.data.idproduct){
+                    if(current2.next.next){
+                        cadena+="a"+actualid+"n"+current2.data.idproduct+" -> a"+actualid+"n"+current2.next.data.idproduct+";\n"
+                    }
+                    
+                    
+                }
+                ranksame+=" ; a"+actualid+"n"+current2.next.data.idproduct;
+                // }
+            // }
             
             current2=current2.next;
         };
         ranksame+="}\n";
         tempstring+=cadena;
         tempstring+=ranksame;
-        // console.log(tempstring);
+        
+        console.log("tempstring********************************************");
+        console.log(tempstring);
+
+        return tempstring
+    };
+    obtainproductsVendedores(actualid,idVenta,idVendedor, idCliente){
+        let current = this.head;
+        var current2=this.head;
+        var tempstring="";
+        let cadena="";
+        var ranksame=""
+
+        if(!this.size){
+            return ""
+        };
+        
+        ranksame+="rank=same { prin"+actualid;
+        while(current){
+            // if(idVenta==current.data.idVenta){
+                
+            
+                cadena+="node[shape = record,fillcolor=\"skyblue\" color=\"black\" style=\"filled\" label=\""+current.data.idproduct+"/"+current.data.nombre+"/ total:"+current.data.total+"\"]a"+actualid+"n"+current.data.idproduct+";\n";
+            
+            // }
+            current=current.next;
+        };
+
+        cadena+="prin"+actualid+" -> a"+actualid+"n"+current2.data.idproduct+";\n";
+        while(current2.next){
+            // if(current2.data.idVenta==actualid){
+                // if(idVendedor==current2.next.data.idVendedor && idCliente==current2.next.data.idCliente){
+                if("a"+actualid+"n"+current2.data.idproduct !="a"+actualid+"n"+current2.next.data.idproduct){
+                    if(current2.next.next){
+                        cadena+="a"+actualid+"n"+current2.data.idproduct+" -> a"+actualid+"n"+current2.next.data.idproduct+";\n"
+                    }
+                    
+                    
+                }
+                ranksame+=" ; a"+actualid+"n"+current2.next.data.idproduct;
+                // }
+            // }
+            
+            current2=current2.next;
+        };
+        ranksame+="}\n";
+        tempstring+=cadena;
+        tempstring+=ranksame;
+        
+        console.log("tempstring********************************************");
+        console.log(tempstring);
+
         return tempstring
     };
 };
 //?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF VENTAS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 function RegistrarVentas(){
     var vendedor=document.getElementById("vendedor").value;
+    var nombrevendedor=document.getElementById("nombrevendedor").value;
     var client=document.getElementById("cliente").value;
     var idiproduct=document.getElementById("id").value;
     var precio=document.getElementById("precio").value;
@@ -3385,7 +3670,7 @@ function RegistrarVentas(){
     var cant=document.getElementById("cantidad").value;
     
     // Proveedoresg=localStorage.getItem("BST")
-    if( idiproduct!=""&& vendedor!=""&& client!=""&& cant!=""&& precio!=""&& nombre!=""){
+    if( idiproduct!=""&& vendedor!=""&& client!=""&& cant!=""&& precio!=""&& nombre!=""&& nombrevendedor!=""){
         //id de la Venta GENERADO AUTOMÁTICAMENTE.
         var idiVenta= sessionStorage.getItem("idiventa")
         if(idiVenta==null){
@@ -3393,7 +3678,7 @@ function RegistrarVentas(){
         }
         idiVenta=parseInt(idiVenta)+1;
 
-        var add = new Ventasobj(parseInt(idiVenta), parseInt(vendedor), parseInt(client),parseInt(idiproduct), parseInt(cant), parseInt(precio), nombre);
+        var add = new Ventasobj(parseInt(idiVenta), parseInt(vendedor),nombrevendedor, client,parseInt(idiproduct), parseInt(cant), parseInt(precio), nombre);
         // var lista_tem = JSON.parse(sessionStorage.getItem("vendedor"));
         sessionStorage.setItem("idiventa",idiVenta)
 
@@ -3418,6 +3703,7 @@ function RegistrarVentas(){
             listjson.push(add)
             var jsoncreate=JSON.stringify(listjson)
             sessionStorage.setItem("ventas",jsoncreate)
+            sessionStorage.setItem("ventasblock",jsoncreate)
             alert(" La Venta se ha ingresado correctamente")
         }else{
             alert("El id de la Venta ya existe en el sistema.")
@@ -3459,14 +3745,24 @@ function cargaVentas(){
         json = JSON.parse(tempstring);
         console.log(json)
         var idivendedor =""
-        var idiCliente =""
+        var nombrevendedor =""
+        var nombreCliente =""
         var idproduct=""
         var cant=""
         var precio=""
         var nombre=""
         json.ventas.forEach(function(items0) {
-            idivendedor=items0.vendedor
-            idiCliente=items0.cliente
+            idivendedor=items0.id
+            nombrevendedor=items0.vendedor
+            nombreCliente=items0.cliente
+            //id de la Venta GENERADO AUTOMÁTICAMENTE.
+            var idiVenta= sessionStorage.getItem("idiventa")
+                
+            if(idiVenta==null){
+                idiVenta=0
+            }
+            idiVenta=parseInt(idiVenta)+1;
+            sessionStorage.setItem("idiventa",idiVenta)
             items0.productos.forEach(function(items) {
                 console.log('*********************');
                 console.log('-->',items.id);
@@ -3477,14 +3773,9 @@ function cargaVentas(){
                 cant=items.cantidad
                 precio=items.precio
                 nombre=items.nombre
-                //id de la Venta GENERADO AUTOMÁTICAMENTE.
-                var idiVenta= sessionStorage.getItem("idiventa")
-                if(idiVenta==null){
-                    idiVenta=0
-                }
-                idiVenta=parseInt(idiVenta)+1;
-                var add = new Ventasobj(parseInt(idiVenta), parseInt(idivendedor),parseInt(idiCliente),parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
-                sessionStorage.setItem("idiventa",idiVenta)
+                //! Ventasobj(idVenta,idVendedor,nombreVendedor, nombreCliente, idproduct, cantidad,precio, nombre)
+                var add = new Ventasobj(parseInt(idiVenta), parseInt(idivendedor),nombrevendedor,nombreCliente,parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
+                
                 //!AGREGO CADA UNO DE LOS EVENTOS.
                 var list=sessionStorage.getItem("ventas") 
                 if(list==null){
@@ -3493,17 +3784,18 @@ function cargaVentas(){
                 console.log("AGREGANDO LA VENTA -----------")
                 listjson = JSON.parse(list);
                 var existevento=false
-                listjson.forEach(function(items) {
-                        if(items.idVenta==idiVenta){
-                            console.log("ya existe una Venta")
-                            existevento=true
-                        }
-                });
+                // listjson.forEach(function(items) {
+                //         if(items.idVenta==idiVenta){
+                //             console.log("ya existe una Venta")
+                //             existevento=true
+                //         }
+                // });
                 if(!existevento){
                     console.log("insertando la venta")
                     listjson.push(add)
                     var jsoncreate=JSON.stringify(listjson)
                     sessionStorage.setItem("ventas",jsoncreate)
+                    sessionStorage.setItem("ventasblock",jsoncreate)
                     console.log(" La venta se ha ingresado correctamente")
                 }else{
                     console.log("La venta ya existe .")
@@ -4157,8 +4449,150 @@ function genReportRutaOptima(){
 
 
 
+//*************************************************************************** */
+//!----------------------BLOCKCHAIN DE LAS VENTAS----------------------
+class bloque{
+    constructor(indice,data,previusHash){
+        this.indice = indice;
+        this.data = data;
+        this.fecha = Date.now();
+        this.previusHash = previusHash;
+        this.hash = this.crearHash();
+        this.txt=""
+        // console.log(this.hash)
+        this.nonce =0;
+        var ceros = sessionStorage.getItem("ceros")
+        if(ceros==null || ceros==""){
+            ceros=4
+        }
+        console.log(ceros)
+        this.prueba_de_trabajo(parseInt(ceros));
+    }
 
+    crearHash(){
+    
+        //usar libreria
+        var sha256 = new jsSHA('SHA-256', 'TEXT');
+        sha256.update(this.indice+this.data+this.fecha+this.previusHash+this.nonce);
+        var hash = sha256.getHash("HEX");
+        
+        // document.getElementById("textar5").value = hash;
+        console.log(hash)
+        this.txt+=hash+"\n"
+        return hash
+        // return crypto.createHash('sha256').update(this.indice+this.data+this.fecha+this.previusHash+this.nonce).digest('hex');
+    }
 
+    prueba_de_trabajo(dificultad){
+        // console.log(this.hash)
+        
+        while(this.hash.substring(0,dificultad) !== Array(dificultad+1).join("0")){
+            this.nonce++;
+            this.hash = this.crearHash();
+            //console.log("->nonce " +this.nonce);
+        }
+        //console.log(this.hash);
+        return this.hash;
+    }
+}
+
+class cadena{
+    constructor(){
+        this.indice=0;
+        this.cadena =[];
+        this.cadena.push(this.Bloque_genesis());
+    }
+
+    Bloque_genesis(){
+        let genesis = new bloque(this.indice,"bloque Genesis","");
+        this.indice++;
+        return genesis;
+    }
+
+    agregar(data){
+        console.log(data)
+        let nuevo = new bloque(this.indice,data,this.cadena[this.indice-1].hash);
+        this.indice++;
+        this.cadena.push(nuevo);
+        document.getElementById("textar5").value = this.txt;
+    }
+
+    recorrer(){
+
+        
+
+        for(let item of this.cadena){
+            console.log(item);
+            
+        }
+        
+    }
+    recorrer1(){
+        var cont=0
+        for(let item of this.cadena){
+            if(cont==1){
+                console.log(item);
+                return item
+            }
+            cont++
+        }
+    }
+
+}
+
+function GenerarBloqueVentas(){
+    // var blockChain = CargaListaBlockchain();
+    var blockChain = new cadena();
+    var ventasLocal = sessionStorage.getItem("ventasblock");
+    if(ventasLocal==null){
+        ventasLocal="[]"
+        var json = JSON.parse(ventasLocal);
+        console.log(json);
+
+        blockChain.agregar(JSON.stringify(json));
+    }
+    
+    blockChain.agregar("\\[object\\]");
+    console.log("▬▬▬▬▬▬▬▬▬OBJETO▬▬▬▬▬▬▬▬▬▬▬▬")
+    console.log(ventasLocal)
+    var datasave =blockChain.recorrer1();
+    var list4 = sessionStorage.getItem("Bloques")
+    if(list4==null){
+        list4="[]"
+    }
+    
+    json4 = JSON.parse(list4);
+    console.log(json4);
+    json4.push(datasave);
+    
+    var jsoncreatead=JSON.stringify(json4);
+    sessionStorage.setItem("Bloques",jsoncreatead);
+    sessionStorage.setItem("ventasblock","[]");
+    // location.href("Reporte_BlockChain.html")
+    window.location.replace("Reporte_BlockChain.html");
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CHART OF BLOQUES ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function genReportBloques(){
+    var newGrafo = CargaBlockchain();
+    
+    var auxdotgen=newGrafo;
+    
+    console.log(auxdotgen);
+    
+    document.getElementById("textar").value = auxdotgen;
+
+}
+//?↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ REGISTER OF CONFIGURATION ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function Configurar(){
+    var minutos=document.getElementById("minutos").value;
+    var segundos=document.getElementById("segundos").value;
+    var ceros=document.getElementById("ceros").value;
+    sessionStorage.setItem("mins",minutos)
+    sessionStorage.setItem("sec",segundos)
+    sessionStorage.setItem("ceros",ceros)
+    alert("Configuraciones Guardadas")
+    
+};
 
 
 
@@ -4324,7 +4758,7 @@ function CargaListas(){
         });
     // vendedornew.gendot_Calendar(2,)
     console.log(vendedornew)
-
+    return vendedornew
    
 }
 function CargaListasProducts(){
@@ -4354,32 +4788,34 @@ function CargaListasProducts(){
     return productnew;
 }
 function CargaListasVentas(){
-    //!cargo mis Productos --> Ventasobj(idVenta,idVendedor, idCliente, idproduct, cantidad)
+    //!cargo mis Productos --> Ventasobj(idVenta,idVendedor,nombreVendedor, nombreCliente, idproduct, cantidad,precio, nombre){
     var ventanew = new HashTable();
     var list4=sessionStorage.getItem("ventas")
     if(list4==null){
         list4="[]"
     }
     json4 = JSON.parse(list4);
-    console.log(json4)
-    var idVenta,idVendedor,idCliente,idproduct,cant,nombre,precio= "";
+    console.log(json4);
+    var idVenta,idVendedor,nombreVendedor,nombreCliente,idproduct,cant,nombre,precio= "";
     json4.forEach(function(items) {
         console.log('*********************');
         console.log('-->',items.idVenta);
         console.log('-->',items.idVendedor);
-        console.log('-->',items.idCliente);
+        console.log('-->',items.nombreVendedor);
+        console.log('-->',items.nombreCliente);
         console.log('-->',items.idproduct);
         console.log('-->',items.cantidad);
         console.log('-->',items.nombre);
         console.log('-->',items.precio);
         idVenta=items.idVenta;
         idVendedor=items.idVendedor;
-        idCliente=items.idCliente;
+        nombreVendedor=items.nombreVendedor;
+        nombreCliente=items.nombreCliente;
         idproduct=items.idproduct;
-        nombre=items.idproduct;
-        precio=items.idproduct;
+        nombre=items.nombre;
+        precio=items.precio;
         cant=items.cantidad;
-        var add = new Ventasobj(parseInt(idVenta), parseInt(idVendedor),parseInt(idCliente),parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
+        var add = new Ventasobj(parseInt(idVenta), parseInt(idVendedor),nombreVendedor, nombreCliente,parseInt(idproduct),parseInt(cant),parseInt(precio),nombre);
         ventanew.insert(new nodoHash(add));
         });
     console.log(ventanew);
@@ -4434,6 +4870,51 @@ function CargaListasRutas(){
     console.log(Grafo);
     return Grafo;
 }
+function CargaBlockchain(){
+    // var blockChain = new cadena();
+    var dotGen="digraph g {\nbgcolor = \"yellow\"\ngraph [fontsize=25 labelloc=\"t\" label=\"BLOCKCHAIN\" splines=true overlap=false rankdir = \"LR\"];"
+    var list4=sessionStorage.getItem("Bloques")
+    if(list4==null){
+        list4="[]"
+    }
+    json4 = JSON.parse(list4);
+    console.log(json4)
+    var temp=""
+    var dataanterior=""
+    var cont=0
+    json4.forEach(function(items) {
+        console.log('*********************');
+        console.log('-->',items);
+        dotGen+=cont+"[ style = \"filled, bold\" penwidth = 5 fillcolor = \"white\" fontname = \"Courier New\" width=1 shape = \"Mrecord\" label = \" \\nINDICE:"+ cont +"\\nFECHA:"+ items.fecha+"\\nDATA:"+ items.data +"\\nNONCE:"+ items.nonce+"\\nPREVIOUSHASH:"+ dataanterior+"\\nHASH:"+items.hash+"\"];\n";
+        dataanterior=items.hash
+        temp+=cont+"->"
+        cont++
+        
+        });
+    var newtemp=temp.substring(0, temp.length - 2)
+    dotGen+=newtemp
+    dotGen+="\n}"
+    sessionStorage.setItem("mins",0)
+    sessionStorage.setItem("sec",58)
+    return dotGen;
+}
+function CargaListaBlockchain(){
+    var blockChain = new cadena();
+    var list4=sessionStorage.getItem("datablocks")
+    if(list4==null){
+        list4="[]"
+    }
+    json4 = JSON.parse(list4);
+    console.log(json4)
+    var temp=""
+    json4.forEach(function(items) {
+        console.log('*********************');
+        console.log('-->',items);
+        
+        blockChain.agregar(items);
+        });
+    return blockChain
+}
 // borrarSesion()
 
 // function Copytext() {
@@ -4450,3 +4931,4 @@ function CargaListasRutas(){
 //     /* Alert the copied text */
 //     alert("Copied the text: " + copyText.value);
 //   }
+

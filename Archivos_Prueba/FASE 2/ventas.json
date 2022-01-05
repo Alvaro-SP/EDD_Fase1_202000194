@@ -1,8 +1,10 @@
 {
     "ventas":[
         {
-            "vendedor":1,
-            "cliente":2,
+
+            "id":1,
+            "vendedor":"Juanito",
+            "cliente":"Isabela",
             "productos":[
                 {"id":1,
                 "precio":100,
@@ -14,13 +16,38 @@
                 "precio":100,
                 "nombre":"producto 5",
                 "cantidad":1
+                },
+                {
+                "id":8,
+                "precio":500,
+                "nombre":"producto 8",
+                "cantidad":1
+                },
+                {
+                "id":40,
+                "precio":500,
+                "nombre":"producto 40",
+                "cantidad":1
+                },
+                {
+                "id":9,
+                "precio":500,
+                "nombre":"producto 9",
+                "cantidad":1
+                },
+                {
+                "id":7,
+                "precio":500,
+                "nombre":"producto 7",
+                "cantidad":1
                 }
             ]
         },
 
         {
-            "vendedor":1,
-            "cliente":1,
+            "id":2,
+            "vendedor":"Rodriguez",
+            "cliente":"Santos",
             "productos":[
                 {"id":2,
                     "precio":100,
@@ -36,8 +63,9 @@
         },
 
         {
-            "vendedor":2,
-            "cliente":1,
+            "id":3,
+            "vendedor":"Miguel",
+            "cliente":"Anastasia",
             "productos":[
                 {"id":1,
                     "precio":100,
@@ -52,8 +80,9 @@
             ]
         },
         {
-            "vendedor":3,
-            "cliente":2,
+            "id":1,
+            "vendedor":"Juanito",
+            "cliente":"Miguel",
             "productos":[
                 {"id":1,
                     "precio":100,
@@ -63,6 +92,24 @@
                 "id":10,
                 "precio":100,
                 "nombre":"producto 10",
+                "cantidad":2
+                },
+                {
+                "id":49,
+                "precio":100,
+                "nombre":"producto 49",
+                "cantidad":2
+                },
+                {
+                "id":7,
+                "precio":100,
+                "nombre":"producto 7",
+                "cantidad":2
+                },
+                {
+                "id":100,
+                "precio":100,
+                "nombre":"producto 100",
                 "cantidad":2
                 }
             ]
