@@ -1047,6 +1047,64 @@ class AVL_vend{
         }
         return cadena;
     }
+    //*Generación de los Dots
+    gendot_Encriptados2(){
+        // let cadena="digraph arbol {\n";
+        let cadena="";
+        cadena+= this.generar_nodos33(this.head);
+        cadena+="\n";
+        cadena+=this.enlazar33(this.head);
+        
+        console.log(cadena);
+        return cadena;
+    }
+    generar_nodos33(raiz_actual){ 
+        let nodos ="";
+        let labeltemp ="";
+        if(raiz_actual != null){
+            var sha2561 = new jsSHA('SHA-256', 'TEXT');
+            sha2561.update(raiz_actual.data.username);
+            var hash1 = sha2561.getHash("HEX");
+
+            var sha2562 = new jsSHA('SHA-256', 'TEXT');
+            sha2562.update(raiz_actual.data.name);
+            var hash2 = sha2562.getHash("HEX");
+
+            var sha2563 = new jsSHA('SHA-256', 'TEXT');
+            sha2563.update(raiz_actual.data.edad);
+            var hash3 = sha2563.getHash("HEX");
+
+            var sha2564 = new jsSHA('SHA-256', 'TEXT');
+            sha2564.update(raiz_actual.data.mail);
+            var hash4 = sha2564.getHash("HEX");
+
+            var sha2565 = new jsSHA('SHA-256', 'TEXT');
+            sha2565.update(raiz_actual.data.pass);
+            var hash = sha2565.getHash("HEX");
+            labeltemp="[label = \" iD:"+raiz_actual.data.id+"\n User:"+hash1+"\n Nombre: "+hash2+"\n Edad: "+hash3+"\n Mail: "+hash4+"\n Contra: "+hash5+"\"];\n"
+            nodos+= "n"+raiz_actual.data.id+labeltemp;
+            nodos+=this.generar_nodos33(raiz_actual.izquierda);
+            nodos+=this.generar_nodos33(raiz_actual.derecha);
+        }
+        return nodos;
+    }
+    enlazar33(raiz_actual){
+        let cadena="";
+        if(raiz_actual != null){
+            cadena += this.enlazar33(raiz_actual.izquierda);
+            cadena += this.enlazar33(raiz_actual.derecha);
+            //validaciones
+            if(raiz_actual.izquierda != null){
+                cadena+="n"+raiz_actual.data.id + "-> n"+raiz_actual.izquierda.data.id+"\n";
+                // cadena+="n"+raiz_actual.izquierda.data.id + "-> n"+raiz_actual.data.id+"\n";
+            }
+            if(raiz_actual.derecha != null){
+                cadena+="n"+raiz_actual.data.id + "-> n"+raiz_actual.derecha.data.id+"\n";
+                // cadena+="n"+raiz_actual.derecha.data.id + "-> n"+raiz_actual.data.id+"\n";
+            }
+        }
+        return cadena;
+    }
     //* ENCRIPTADO GENERACIÓN
     gendot_Vendedores(){
         // let cadena="digraph arbol {\n";
@@ -1429,8 +1487,55 @@ function genReportEncriptados(){
           },        
           layout: {
               hierarchical: {
-                  levelSeparation: 150,
-                  nodeSpacing: 170,
+                  levelSeparation: 180,
+                  nodeSpacing: 210,
+                  parentCentralization: false,
+                  direction: 'UD',        // UD, DU, LR, RL
+                  sortMethod: 'directed',  // hubsize, directed
+                  shakeTowards: 'roots'  // roots, leaves                        
+              },
+          },                        
+      };
+      var network = new vis.Network(container, data, options);
+      genReportEncriptados2()
+    }
+function genReportEncriptados2(){
+    var newalv = CargaListas();
+    var dotfortext= "digraph Chart{ \n";
+    dotfortext+= "node[shape = box,fillcolor=\"yellow\" color=\"black\" style=\"filled\"];\n";
+    var dotgen="{\n";
+    var auxdotgen=newalv.gendot_Encriptados2();
+    dotgen+=auxdotgen
+    dotfortext+=auxdotgen
+    dotgen+="\n}";
+    dotfortext+="\n}";
+    console.log(dotgen)
+    
+    document.getElementById("textar").value = dotfortext;
+    //create a network
+      var container = document.getElementById("mynetwork3");
+      var DOTstring = dotgen
+      
+      // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
+      
+      console.log(DOTstring)
+      // console.log("Holaa esta es una prueba.")
+
+      var parsedData = vis.parseDOTNetwork(DOTstring);
+      var data = {
+          nodes: parsedData.nodes,
+          edges: parsedData.edges
+      }
+      var options = {
+          nodes: {
+              shape: 'box',
+              borderWidth: 2,                
+              color:"yellow",
+          },        
+          layout: {
+              hierarchical: {
+                  levelSeparation: 180,
+                  nodeSpacing: 210,
                   parentCentralization: false,
                   direction: 'UD',        // UD, DU, LR, RL
                   sortMethod: 'directed',  // hubsize, directed
@@ -3812,6 +3917,20 @@ function cargaVentas(){
 function genReportVentas(){
     var newBTree = CargaListasVentas();
     var auxdotgen=newBTree.graphTable();
+    console.log(auxdotgen);
+    document.getElementById("textar").value = auxdotgen;
+}
+function genReportVentasVendedor(){
+    var idi=document.getElementById("id").value;
+    var newBTree = CargaListasVentas();
+    var auxdotgen=newBTree.graphTableVENDE(parseInt(idi));
+    console.log(auxdotgen);
+    document.getElementById("textar").value = auxdotgen;
+}
+function genReportVentasVendedor2(){
+    var idcurrent=sessionStorage.getItem("idcurrent")
+    var newBTree = CargaListasVentas();
+    var auxdotgen=newBTree.graphTableVENDE(parseInt(idcurrent));
     console.log(auxdotgen);
     document.getElementById("textar").value = auxdotgen;
 }

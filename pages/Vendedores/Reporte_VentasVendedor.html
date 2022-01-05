@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Reporte Usuarios Encriptados</title>
+    <title>Ver Calendario</title>
     <script type="text/javascript" src="../../ProgramLogic/vis-network.min.js"></script>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -23,7 +23,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body onload="genReportVendedor2()">
+  <body onload="onloadName()">
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -37,11 +37,11 @@
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="../../assets/images/faces/face16.jpg" alt="">
+                  <img class="img-xs rounded-circle " src="../../assets/images/faces/user.png" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">Administrador</h5>
+                  <h5 id="prin" class="mb-0 font-weight-normal">Administrador</h5>
                   <span>Gold Member</span>
                 </div>
               </div>
@@ -85,182 +85,51 @@
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
+
           <li class="nav-item menu-items">
-            <a class="nav-link" href="PanelAdmin.html">
+            <a class="nav-link" href="PanelVendedor.html">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
               <span class="menu-title">Mi Perfil</span>
             </a>
           </li>
+
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
-              <span class="menu-title">Admin. de Vendedores</span>
+              <span class="menu-title">Clientes Asignados</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AddVendedor.html">Agregar</a></li>
-                <li class="nav-item"> <a class="nav-link" href="DeleteVendedor.html">Eliminar</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
-              </span>
-              <span class="menu-title">Admin. de Proveedores</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic2">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="AddProveedor.html">Agregar</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="DeleteProveedor.html">Eliminar</a></li>
-                  <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-                </ul>
-              </div>
-          </li>
-          <!-- ! inicio FASE 2 -->
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
-              </span>
-              <span class="menu-title">Admin. de Productos</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic5">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AddProduct.html">Agregar</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="DeleteVendedor.html">Eliminar</a></li> -->
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
-          </li>
-        
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic8" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-link-variant"></i>
-              </span>
-              <span class="menu-title">Admin. de Ventas</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic8">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AddVentas.html">Agregar</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="DeleteVendedor.html">Eliminar</a></li> -->
+                <li class="nav-item"> <a class="nav-link" href="AddCliente.html">Agregar</a></li>
+                <li class="nav-item"> <a class="nav-link" href="DeleteCliente.html">Eliminar</a></li>
+                <li class="nav-item"> <a class="nav-link" href="ModCliente.html">Modificar</a></li>
                 <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
               </ul>
             </div>
           </li>
 
           <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic9" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Admin. de Rutas</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic9">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="AddRutas.html">Agregar</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="DeleteVendedor.html">Eliminar</a></li> -->
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
-          </li>
-          <!-- !FIN FASE 2 -->
-          <!-- <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/tables/basic-table.html">
+            <a class="nav-link" href="ViewCalendar.html">
               <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
-              <span class="menu-title">Calendario</span>
+              <span class="menu-title">Ver Calendario</span>
             </a>
-          </li> -->
-          <!-- <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
-              </span>
-              <span class="menu-title">Reportes</span>
-            </a>
-          </li> -->
-          <!-- <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/icons/mdi.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-contacts"></i>
-              </span>
-              <span class="menu-title">Carga Masiva</span>
-            </a>
-          </li> -->
+          </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" href="PanelCalendar.html">
               <span class="menu-icon">
-                <i class="mdi mdi-contacts"></i>
+                <i class="mdi mdi-table-large"></i>
               </span>
-              <span class="menu-title">Carga Masiva</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title">Agregar Evento</span>
             </a>
-            <div class="collapse" id="auth1">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="Carga_Vendedores.html"> Vendedores </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Carga_Clientes.html"> Clientes </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Carga_Proveedores.html"> Proveedores </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Carga_Eventos.html"> Eventos </a></li>
-                <!-- ! FASE 2 -->
-                <li class="nav-item"> <a class="nav-link" href="Carga_Productos.html"> PRODUCTOS </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Carga_Ventas.html"> VENTAS </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Carga_Rutas.html"> RUTAS </a></li>
-                <!-- ! FIN FASE 2 -->
-              </ul>
-            </div>
           </li>
 
-
-
-
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
-              </span>
-              <span class="menu-title">Reportes</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Vendedores.html"> Vendedores </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Proveedores.html"> Proveedores </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Calendario.html"> Calendario </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Clientes.html"> Clientes </a></li>
-                <!-- ! FASE 2 -->
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Productos.html"> Inventario </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Ventas.html"> Ventas </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_VentasVendedor.html"> Ventas por Vendedor </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Rutas.html"> Rutas </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_RutaOptima.html"> Ruta Optima </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_UsuariosEncriptados.html"> Usuarios Encriptados </a></li>
-                <li class="nav-item"> <a class="nav-link" href="Reporte_Blockchain.html"> BlockChain </a></li>
-                <!-- ! FIN FASE 2 -->
-              </ul>
-            </div>
-          </li>
-          <!-- <li class="nav-item menu-items">
-            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li> -->
         </ul>
       </nav>
       <!-- partial -->
@@ -271,9 +140,9 @@
             <a class="navbar-brand brand-logo-mini" href="PanelAdmin.html"><img src="../../assets/images/logo-mini.svg" alt="tipo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
               <span class="mdi mdi-menu"></span>
-            </button>
+            </button> -->
             <ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
@@ -378,8 +247,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="../../assets/images/faces/face16.jpg" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Administrador</p>
+                    <img class="img-xs rounded-circle" src="../../assets/images/faces/user.png" alt="">
+                    <p id="parrafo" class="mb-0 d-none d-sm-block navbar-profile-name">Administrador</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
@@ -406,7 +275,7 @@
                    
                     <div class="preview-item-content">
                          
-                             <p href="../../../../index.html" class="preview-subject mb-1">Log out</p>
+                             <p href="../../index.html" class="preview-subject mb-1">Log out</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
@@ -438,18 +307,40 @@
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h3 class="card-title">REPORTE DE USUARIOS ENCRIPTADOS</h3>
+                    <h3 class="card-title">REPORTE DE VENTAS POR VENDEDOR </h3>
+                    <div class="col-sm-9">
+                      <div class="form-group row">
+                          <label for="dia" class="col-sm-3 col-form-label">ID Vendedor:</label>
+                          <div class="col-sm-3">
+                            <input type="number" class="form-control" id="id" placeholder="ejemplo, 25">
+                          </div>
+                          
+                          </div>
+                          
+                          <button onclick="genReportVentasVendedor()" type="submit" class="btn btn-primary mr-2">Submit</button>
+
+                    </div>
+
+
                     <!-- <img src="../../assets/images/dadmin.png" width="300" height="300" alt="admin">                     -->
-                    <h4>Sin Encriptar:</h4>
-                    <div id="mynetwork" style="height: 600px;"></div>
-                    <h4>Encriptados con base 64:</h4>
-                    <div id="mynetwork2" style="height: 600px;"></div>
-                    <h4>Encriptados con SHA256:</h4>
-                    <div id="mynetwork3" style="height: 600px;"></div>
+                    
+                    
+                    <div id="review" style="height: 600px; overflow: scroll;">
+                      <div id="error"></div>
+                    </div>        
                 </div>
+                <button id="generate_btn" disabled style="font-size: 120%"><b>Loading...</b>
+                  <!-- The "update"  -->
+                  </button>
+                  <!-- <div id="review" class="">
+                      <div id="error"></div> -->
+                    <!-- <div id="graphviz_svg_div">
+                      
+                      </div> -->
+                  <!-- </div> -->
                 <h3 >puede copiar y pegar con el boton, en graphviz online en formato dot:</h3>
                 <button class="js-textareacopybtn">Copy Clipboard</button>
-                <textarea id="textar" class="js-copytextarea" name="textar" rows="20" cols="30"></textarea>
+                <textarea id="textar" class="js-copytextarea" name="textar" rows="5" cols="30"></textarea>
                 <script>
                   // function Copytext() {
                     var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
@@ -474,13 +365,14 @@
                 
               </div>
               
+              
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2021</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">3034161730108@ingenieria.usac.edu.gt</span>
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2021  </span><br>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">  3034161730108@ingenieria.usac.edu.gt</span>
             </div>
           </footer>
           <!-- partial -->
@@ -491,8 +383,6 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="../../sha256.js"></script>
-    <script src="../../sha256.min.js"></script>
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -513,42 +403,6 @@
     <script src="../../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
     <script src="../../circular-json.js"></script>
-    <!-- <script src="../../ProgramLogic/main.js"></script> -->
     <script src="../../ProgramLogic/main.js"></script>
-    <script type="text/javascript">
-    //   // create a network
-    //   var container = document.getElementById("mynetwork");
-    //   var DOTstring = networkProveedores()
-      
-    //   // var DOTstring = "{1_Alvaro [label = \"Estructuras\nHola\nPrueba\nsocop2412@gmail.com\"];\n 1_Alvaro--2_Alvaro;2_Alvaro--3_Alvaro;}"
-      
-    //   console.log(DOTstring)
-    //   // console.log("Holaa esta es una prueba.")
-
-    //   var parsedData = vis.parseDOTNetwork(DOTstring);
-    //   var data = {
-    //       nodes: parsedData.nodes,
-    //       edges: parsedData.edges
-    //   }
-    //   var options = {
-    //       nodes: {
-    //           shape: 'box',
-    //           borderWidth: 2,                
-    //           color:"yellow",
-    //       },        
-    //       layout: {
-    //           hierarchical: {
-    //               levelSeparation: 100,
-    //               nodeSpacing: 100,
-    //               parentCentralization: true,
-    //               direction: 'UD',        // UD, DU, LR, RL
-    //               sortMethod: 'directed',  // hubsize, directed
-    //               shakeTowards: 'roots'  // roots, leaves                        
-    //           },
-    //       },                        
-    //   };
-    //   var network = new vis.Network(container, data, options);
-      </script> 
-   
   </body>
 </html>
