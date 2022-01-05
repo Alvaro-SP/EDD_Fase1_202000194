@@ -4044,13 +4044,20 @@ class GrafoRuta{
         return dis
     }
     findShortPath(start, end){
+        var total=0
+        sessionStorage.setItem("dijkstra",0);
         if (start === end) {
             var aux = this.searchNode(start);
             aux.marca=true;
+            
+            // console.log("anterior:",aux.adyacentes.head.ponderation)
+            document.getElementById("textar20").value = "LA RUTA OPTIMA CONSUME : "+total+" de gas.";
 			return this.gendot();
 		} else {
             var aux3 = this.searchNode(start);
             aux3.marca=true;
+            // total+=aux3.adyacentes.head.ponderation
+            console.log("ponderacion inicio= ",aux3.ponderacion)
 			var matriz=this.genMatrizAdyacente();
             console.log(matriz)
             var d = new RutaOptimaDijkstra();
@@ -4065,9 +4072,15 @@ class GrafoRuta{
                 console.log(String(aux.data.id))
                 if(path.includes(String(aux.data.id))){
                     aux.marca=true;
+                    console.log(aux)
                 }
                 aux = aux.siguiente;
             }
+            var distanciadij=sessionStorage.getItem("dijkstra");
+            if(distanciadij==null){
+                distanciadij=0
+            }
+            document.getElementById("textar20").value = "LA RUTA OPTIMA CONSUME : "+distanciadij+" de gas.";
             var newpath=this.gendot()
             return newpath
 		}
@@ -4184,11 +4197,15 @@ var RutaOptimaDijkstra = (function () {
             }
 
             var uDistance = this.queue.getDistance(u)
+            
             for (var neighbour in this.graph[u]) {
                 var nDistance = this.queue.getDistance(neighbour),
                     aDistance = uDistance + this.graph[u][neighbour];
 
                 if (aDistance < nDistance) {
+                    
+                    
+                    
                     this.queue.update(neighbour, aDistance);
                     this.previous[neighbour] = u;
                 }
@@ -4235,6 +4252,7 @@ var RutaOptimaDijkstra = (function () {
 
                 if (distance < lowestDistance) {
                     lowestDistance = distance;
+                    
                     this.min = node;
                 }
             }
@@ -4314,6 +4332,7 @@ var RutaOptimaDijkstra = (function () {
             // se verifica si es el minimo
             if (!this.min || distance < this.nodes[this.min].distance) {
                 this.min = node;
+                
             }
 
             // Other stuff
@@ -4324,6 +4343,7 @@ var RutaOptimaDijkstra = (function () {
         {
             this.remove(node);
             this.add(node, distance);
+            
         }
 
         MinHeap.prototype.remove = function(node)
