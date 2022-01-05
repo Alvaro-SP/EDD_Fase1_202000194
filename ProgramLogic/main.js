@@ -1080,7 +1080,7 @@ class AVL_vend{
 
             var sha2565 = new jsSHA('SHA-256', 'TEXT');
             sha2565.update(raiz_actual.data.pass);
-            var hash = sha2565.getHash("HEX");
+            var hash5 = sha2565.getHash("HEX");
             labeltemp="[label = \" iD:"+raiz_actual.data.id+"\n User:"+hash1+"\n Nombre: "+hash2+"\n Edad: "+hash3+"\n Mail: "+hash4+"\n Contra: "+hash5+"\"];\n"
             nodos+= "n"+raiz_actual.data.id+labeltemp;
             nodos+=this.generar_nodos33(raiz_actual.izquierda);
